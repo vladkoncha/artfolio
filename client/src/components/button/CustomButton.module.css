@@ -1,0 +1,20 @@
+button {
+    line-height: 2;
+}
+
+.main {
+    padding: 5px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid #202020;
+    border-radius: 10px;
+    background-color: #202020;
+}
+
+.main:hover {
+    transform: translateY(-2px);
+    background-color: #000000;
+    transition: all 0.25s ease-in-out;
+}

@@ -1,0 +1,28 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.loginForm > input {
+    box-sizing: border-box;
+    margin: 10px 50px;
+    max-width: 60vw;
+    width: 30rem;
+}
+
+.loginForm > button {
+    margin: 30px 50px;
+    max-width: 60vw;
+    width: 30rem;
+}
+
+.loginForm > h1 {
+    font-size: 1.5rem;
+    margin: 20px 50px;
+    font-weight: normal;
+}
