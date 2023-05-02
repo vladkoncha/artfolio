@@ -16,12 +16,13 @@ button {
     width: 30rem;
 
     margin: 30px 50px 0;
+
+    transition: transform 0.25s ease-in-out;
 }
 
 .main:hover {
-    transform: translateY(-2px);
+    transform: scale(1.02);
     background-color: #000000;
-    transition: all 0.25s ease-in-out;
 }
 
 .linkButton {
