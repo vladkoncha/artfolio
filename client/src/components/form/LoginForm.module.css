@@ -6,17 +6,12 @@
 
     background-color: #fff;
     border-radius: 10px;
+    position: relative;
 }
 
-.loginForm > input {
+.loginForm input {
     box-sizing: border-box;
     margin: 10px 50px;
-    max-width: 60vw;
-    width: 30rem;
-}
-
-.loginForm > button {
-    margin: 30px 50px 0;
     max-width: 60vw;
     width: 30rem;
 }
@@ -25,6 +20,18 @@
     margin: 30px 50px 50px;
     font-size: 0.8em;
 }
+
+.loginForm a {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #2980ff;
+}
+
+.loginForm a:hover {
+    text-decoration: none;
+    color: #005eff;
+}
+
 
 .loginForm > h1 {
     font-size: 1.7rem;

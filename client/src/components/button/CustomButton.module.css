@@ -11,10 +11,34 @@ button {
     border: 1px solid #202020;
     border-radius: 10px;
     background-color: #202020;
+
+    max-width: 60vw;
+    width: 30rem;
+
+    margin: 30px 50px 0;
 }
 
 .main:hover {
     transform: translateY(-2px);
     background-color: #000000;
     transition: all 0.25s ease-in-out;
+}
+
+.linkButton {
+    background: none;
+    border: 0;
+    text-decoration: underline;
+    cursor: pointer;
+    color: #404040;
+
+    max-width: none;
+    width: auto;
+    align-self: flex-end;
+
+    margin: 0 50px 10px;
+}
+
+.linkButton:hover {
+    color: #000;
+    text-decoration: none;
 }
