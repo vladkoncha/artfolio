@@ -16,13 +16,18 @@
 }
 
 .loginForm > button {
-    margin: 30px 50px;
+    margin: 30px 50px 0;
     max-width: 60vw;
     width: 30rem;
 }
 
+.loginForm > p {
+    margin: 30px 50px 50px;
+    font-size: 0.8em;
+}
+
 .loginForm > h1 {
-    font-size: 1.5rem;
-    margin: 20px 50px;
+    font-size: 1.7rem;
+    margin: 40px 50px;
     font-weight: normal;
 }
