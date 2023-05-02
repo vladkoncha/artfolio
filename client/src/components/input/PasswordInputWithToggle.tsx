@@ -1,4 +1,4 @@
-import React, {forwardRef, Ref, useEffect, useState} from 'react';
+import React, {forwardRef, Ref, useState} from 'react';
 import classes from './CustomInput.module.css';
 import passwordStyles from './PasswordInput.module.css';
 import showIcon from '../../media/icons/password-eye.svg';
