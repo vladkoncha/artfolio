@@ -105,14 +105,18 @@ const LoginForm: FC = () => {
                 ? <CustomButton disabled={loginLoading}>Register</CustomButton>
                 : <CustomButton disabled={loginLoading}>Login</CustomButton>}
             {!registration
-                ? <p className={classes.signUp}>Don't have an account? <a
+                ? <p className={classes.signUp}>Don't have an account? <LinkButton
+                    style={{color: 'blue'}}
+                    type='button'
                     onClick={() => {
                         setRegistration(true);
-                    }}>Sign Up</a></p>
-                : <p className={classes.signUp}>Already have an account? <a
+                    }}>Sign Up</LinkButton></p>
+                : <p className={classes.signUp}>Already have an account? <LinkButton
+                    style={{color: 'blue'}}
+                    type='button'
                     onClick={() => {
                         setRegistration(false);
-                    }}>Sign In</a></p>
+                    }}>Sign In</LinkButton></p>
             }
         </form>
     );
