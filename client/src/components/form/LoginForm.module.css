@@ -11,9 +11,15 @@
 
 .loginForm input {
     box-sizing: border-box;
-    margin: 10px 50px;
-    max-width: 60vw;
+    max-width: 80vw;
     width: 30rem;
+    margin: 10px 50px;
+}
+
+@media screen and (min-width: 40rem) {
+    .loginForm input {
+        max-width: 60vw;
+    }
 }
 
 .loginForm > p {

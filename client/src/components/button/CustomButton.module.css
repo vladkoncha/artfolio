@@ -12,12 +12,17 @@ button {
     border-radius: 10px;
     background-color: #202020;
 
-    max-width: 60vw;
+    max-width: 80vw;
     width: 30rem;
-
     margin: 30px 50px 0;
 
     transition: transform 0.25s ease-in-out;
+}
+
+@media screen and (min-width: 40rem) {
+    .main {
+        max-width: 60vw;
+    }
 }
 
 .main:hover {
