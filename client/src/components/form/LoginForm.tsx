@@ -1,19 +1,25 @@
-import React, {FC, FormEvent, useCallback, useState} from 'react';
+import React, {FC, FormEvent, useCallback, useContext, useEffect, useRef, useState} from 'react';
 import classes from './LoginForm.module.css';
 import CustomInput from "../input/CustomInput";
 import CustomButton from "../button/CustomButton";
 import LinkButton from "../button/LinkButton";
 import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
+import {observer} from "mobx-react-lite";
+import {Context} from "../../index";
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const {store} = useContext(Context);
 
-    const setFocus = useCallback((element: HTMLElement) => element.focus(),
-        []);
+    const emailRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+        emailRef.current?.focus();
+    }, []);
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        await store.login(email, password);
         console.log('submit');
     }
 
@@ -25,15 +31,17 @@ const LoginForm: FC = () => {
                          value={email}
                          type='email'
                          placeholder='Email'
-                         ref={setFocus}
+                         ref={emailRef}
             />
             <PasswordInputWithToggle onChange={(e: any) => setPassword(e.target.value)}
                                      value={password}
                                      placeholder='Password'
             />
-            <LinkButton onClick={() => {
-                console.log('forgot');
-            }}>Forgot Password?</LinkButton>
+            <LinkButton
+                type='button'
+                onClick={() => {
+                    console.log('forgot');
+                }}>Forgot Password?</LinkButton>
             <CustomButton>Login</CustomButton>
             <p>Don't have an account? <a onClick={() => {
             }}>Sign Up</a></p>
@@ -41,4 +49,4 @@ const LoginForm: FC = () => {
     );
 };
 
-export default LoginForm;
+export default observer(LoginForm);
