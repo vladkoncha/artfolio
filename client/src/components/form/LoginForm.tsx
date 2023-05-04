@@ -1,8 +1,7 @@
 import React, {FC, FormEvent, useContext, useEffect, useRef, useState} from 'react';
 import classes from './LoginForm.module.css';
 import CustomInput from "../input/CustomInput";
-import CustomButton from "../button/CustomButton";
-import LinkButton from "../button/LinkButton";
+import CustomButton, {ButtonClass} from "../button/CustomButton";
 import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
@@ -85,30 +84,40 @@ const LoginForm: FC = () => {
                 value={password}
                 placeholder='Password'
             />
-            {!registration && <LinkButton
-                type='button'
+            {!registration && <CustomButton
+                buttonClass={ButtonClass.LINK}
                 style={{marginRight: '50px'}}
                 onClick={() => {
                     console.log('forgot');
-                }}>Forgot Password?</LinkButton>}
+                }}>Forgot Password?</CustomButton>}
 
             {errorMessage && <p className={classes.errorMessage}>{errorMessage}</p>}
             {registration
-                ? <CustomButton disabled={loginLoading}>Register</CustomButton>
-                : <CustomButton disabled={loginLoading}>Login</CustomButton>}
+                ? <CustomButton
+                    type='submit'
+                    buttonClass={ButtonClass.MAIN}
+                    disabled={loginLoading}>
+                    Register
+                </CustomButton>
+                : <CustomButton
+                    type='submit'
+                    buttonClass={ButtonClass.MAIN}
+                    disabled={loginLoading}>
+                    Login
+                </CustomButton>}
             {!registration
-                ? <p className={classes.signUp}>Don't have an account? <LinkButton
+                ? <p className={classes.signUp}>Don't have an account? <CustomButton
+                    buttonClass={ButtonClass.LINK}
                     style={{color: 'blue'}}
-                    type='button'
                     onClick={() => {
                         setRegistration(true);
-                    }}>Sign Up</LinkButton></p>
-                : <p className={classes.signUp}>Already have an account? <LinkButton
+                    }}>Sign Up</CustomButton></p>
+                : <p className={classes.signUp}>Already have an account? <CustomButton
+                    buttonClass={ButtonClass.LINK}
                     style={{color: 'blue'}}
-                    type='button'
                     onClick={() => {
                         setRegistration(false);
-                    }}>Sign In</LinkButton></p>
+                    }}>Sign In</CustomButton></p>
             }
         </form>
     );

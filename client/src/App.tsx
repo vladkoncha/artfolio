@@ -3,7 +3,7 @@ import LoginForm from "./components/form/LoginForm";
 import './App.css';
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
-import CustomButton from "./components/button/CustomButton";
+import CustomButton, {ButtonClass} from "./components/button/CustomButton";
 
 function App() {
     const {store} = useContext(Context);
@@ -36,7 +36,11 @@ function App() {
                     ? 'Аккаунт подтвержден'
                     : 'Подтвердите аккаунт'}
             </h1>
-            <CustomButton onClick={() => store.logout()}>Выйти</CustomButton>
+            <CustomButton
+                buttonClass={ButtonClass.MAIN}
+                onClick={() => store.logout()}>
+                Выйти
+            </CustomButton>
         </div>
     );
 }
