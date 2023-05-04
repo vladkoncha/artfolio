@@ -56,11 +56,11 @@ button {
     cursor: pointer;
     color: #404040;
 
+    font-size: 14px;
+
     max-width: none;
     width: auto;
     align-self: flex-end;
-
-    margin: 0 50px 10px;
 }
 
 .linkButton:hover {

@@ -7,25 +7,25 @@ import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 
+const ERRORS = {
+    credits: "Invalid email or password.",
+    unknown: "Unknown error.",
+    shortPassword: "Enter password (3 to 32 characters)."
+}
+
 const LoginForm: FC = () => {
+    const {store} = useContext(Context);
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const [invalidCredits, setInvalidCredits] = useState(false);
-    const [unknownError, setUnknownError] = useState(false);
-    const [shortPassword, setShortPassword] = useState(false);
     const [loginLoading, setLoginLoading] = useState(false);
     const [registration, setRegistration] = useState(false);
-    const [registrationError, setRegistrationError] = useState('');
-
-    const {store} = useContext(Context);
+    const [errorMessage, setErrorMessage] = useState('');
+    const emailRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        setRegistrationError('');
-        setShortPassword(false);
-        setInvalidCredits(false);
-    }, [registration, email])
+        setErrorMessage('');
+    }, [registration, email, password]);
 
-    const emailRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
         emailRef.current?.focus();
     }, []);
@@ -35,10 +35,8 @@ const LoginForm: FC = () => {
         setLoginLoading(true);
         try {
             if (password.length < 3) {
-                setShortPassword(true);
+                setErrorMessage(ERRORS.shortPassword);
                 return;
-            } else {
-                setShortPassword(false);
             }
 
             if (registration) {
@@ -46,18 +44,16 @@ const LoginForm: FC = () => {
             } else {
                 await store.login(email, password);
             }
-            setUnknownError(false);
-            setInvalidCredits(false);
         } catch (e: any) {
             if (e.response?.data?.status === 400) {
                 if (registration) {
-                    setRegistrationError(e.response?.data?.message);
+                    setErrorMessage(e.response?.data?.message);
                 } else {
-                    setInvalidCredits(true);
+                    setErrorMessage(ERRORS.credits);
                 }
                 emailRef.current?.focus();
             } else {
-                setUnknownError(true);
+                setErrorMessage(ERRORS.unknown);
                 console.log(e.response?.data);
             }
         } finally {
@@ -73,34 +69,30 @@ const LoginForm: FC = () => {
                 ? <h1>Welcome to Artfolio!</h1>
                 : <h1>Login to your Artfolio</h1>}
 
-            <CustomInput onChange={(e: any) => {
-                setEmail(e.target.value);
-                setInvalidCredits(false);
-            }}
-                         value={email}
-                         type='email'
-                         placeholder='Email'
-                         ref={emailRef}
+            <CustomInput
+                onChange={(e: any) => {
+                    setEmail(e.target.value);
+                }}
+                value={email}
+                type='email'
+                placeholder='Email'
+                ref={emailRef}
             />
             <PasswordInputWithToggle
                 onChange={(e: any) => {
                     setPassword(e.target.value);
-                    setInvalidCredits(false);
-                    setShortPassword(false);
                 }}
                 value={password}
                 placeholder='Password'
             />
             {!registration && <LinkButton
                 type='button'
+                style={{marginRight: '50px'}}
                 onClick={() => {
                     console.log('forgot');
                 }}>Forgot Password?</LinkButton>}
 
-            {registrationError && <p className={classes.errorMessage}>{registrationError}</p>}
-            {shortPassword && <p className={classes.errorMessage}>Enter password.</p>}
-            {invalidCredits && <p className={classes.errorMessage}>Invalid email or password.</p>}
-            {unknownError && <p className={classes.errorMessage}>Unknown error.</p>}
+            {errorMessage && <p className={classes.errorMessage}>{errorMessage}</p>}
             {registration
                 ? <CustomButton disabled={loginLoading}>Register</CustomButton>
                 : <CustomButton disabled={loginLoading}>Login</CustomButton>}
