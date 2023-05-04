@@ -1,19 +1,23 @@
-import React, {forwardRef, Ref} from 'react';
+import React, {forwardRef, Ref, InputHTMLAttributes} from 'react';
 import classes from './CustomInput.module.css';
 
-const CustomInput = forwardRef((props: any, ref: Ref<any>) => {
-    let inputClasses = [classes.customInput];
-    if (props?.type === 'email') {
-        inputClasses.push(classes.login);
+interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
+    type?: 'email' | 'password';
+}
+
+const CustomInput = forwardRef(
+    (props: CustomInputProps, ref: Ref<HTMLInputElement>) => {
+        let inputClasses = [classes.customInput];
+        if (props?.type === 'email') {
+            inputClasses.push(classes.login);
+        }
+        if (props?.type === 'password') {
+            inputClasses.push(classes.password);
+        }
+        return (
+            <input ref={ref} className={inputClasses.join(' ')} {...props} />
+        );
     }
-    if (props?.type === 'password') {
-        inputClasses.push(classes.password);
-    }
-    return (
-        <input ref={ref}
-               className={inputClasses.join(' ')}
-               {...props}/>
-    );
-});
+);
 
 export default CustomInput;

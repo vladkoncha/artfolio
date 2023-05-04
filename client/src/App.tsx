@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useLayoutEffect} from 'react';
 import LoginForm from "./components/form/LoginForm";
 import './App.css';
 import {Context} from "./index";
@@ -8,7 +8,7 @@ import CustomButton, {ButtonClass} from "./components/button/CustomButton";
 function App() {
     const {store} = useContext(Context);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (localStorage.getItem('token')) {
             void store.checkAuth();
         } else {
@@ -26,16 +26,17 @@ function App() {
 
     return (
         <div>
-            <h1>
-                {store.isAuth
-                    ? `Пользователь авторизован ${store.user.email}`
-                    : 'Авторизуйтесь:'}
-            </h1>
-            <h1>
-                {store.user.isActivated
-                    ? 'Аккаунт подтвержден'
-                    : 'Подтвердите аккаунт'}
-            </h1>
+            {store.isAuth
+                ? <>
+                    <h1>Пользователь авторизован {store.user.email}</h1>
+                    <h1>
+                        {store.user.isActivated
+                            ? 'Аккаунт подтвержден'
+                            : 'Подтвердите аккаунт'}
+                    </h1>
+                </>
+                : store.isLoading && <h1>Подождите...</h1>}
+
             <CustomButton
                 buttonClass={ButtonClass.MAIN}
                 onClick={() => store.logout()}>

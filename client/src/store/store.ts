@@ -44,10 +44,12 @@ export default class Store {
 
     async logout() {
         try {
+            this.setLoading(true);
             await AuthService.logout();
             localStorage.removeItem('token');
             this.setAuth(false);
             this.setUser({} as IUser);
+            this.setLoading(false);
         } catch (e: any) {
             console.log(e.response?.data?.message);
         }
