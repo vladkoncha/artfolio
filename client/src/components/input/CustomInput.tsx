@@ -2,7 +2,7 @@ import React, {forwardRef, Ref, InputHTMLAttributes} from 'react';
 import classes from './CustomInput.module.css';
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    type?: 'email' | 'password';
+    type?: HTMLInputElement['type'];
 }
 
 const CustomInput = forwardRef(

@@ -4,6 +4,7 @@ import './App.css';
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import CustomButton, {ButtonClass} from "./components/button/CustomButton";
+import EditProfileForm from "./components/edit-profile-form/EditProfileForm";
 
 function App() {
     const {store} = useContext(Context);
@@ -27,20 +28,21 @@ function App() {
     return (
         <div>
             {store.isAuth
-                ? <>
-                    <h1>Пользователь авторизован {store.user.email}</h1>
-                    <h1>
-                        {store.user.isActivated
-                            ? 'Аккаунт подтвержден'
-                            : 'Подтвердите аккаунт'}
-                    </h1>
-                </>
+                ? <EditProfileForm/>
+                // ? <>
+                //     <h1>Пользователь авторизован {store.user.email}</h1>
+                //     <h1>
+                //         {store.user.isActivated
+                //             ? 'Аккаунт подтвержден'
+                //             : 'Подтвердите аккаунт'}
+                //     </h1>
+                // </>
                 : store.isLoading && <h1>Подождите...</h1>}
 
             <CustomButton
                 buttonClass={ButtonClass.MAIN}
                 onClick={() => store.logout()}>
-                Выйти
+                Logout
             </CustomButton>
         </div>
     );

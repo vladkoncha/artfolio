@@ -1,0 +1,18 @@
+.customTextArea {
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 0;
+    background-color: #F2F2F2;
+    line-height: 1.5;
+    font-size: 1rem;
+    border-radius: 10px;
+
+    font-family: inherit;
+}
+
+.customTextArea:focus {
+    outline-color: #202020;
+
+    position: relative;
+    z-index: 1;
+}
