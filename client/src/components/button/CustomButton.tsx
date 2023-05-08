@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import classes from './CustomButton.module.css';
 
+//TODO: классы — primary, secondary, link
 export enum ButtonClass {
     MAIN,
     LINK,

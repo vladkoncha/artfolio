@@ -31,6 +31,7 @@ const LoginForm: FC = () => {
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        setErrorMessage('');
         setLoginLoading(true);
         try {
             if (password.length < 3) {
