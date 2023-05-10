@@ -17,10 +17,8 @@ const PasswordInputWithToggle = forwardRef(
                 <input
                     className={[classes.customInput, classes.password].join(' ')}
                     type={showPassword ? 'text' : 'password'}
-                    placeholder={props.placeholder}
-                    value={props.value}
-                    onChange={props.onChange}
                     ref={ref}
+                    {...props}
                 />
                 <button
                     type="button"

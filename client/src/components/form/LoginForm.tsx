@@ -5,40 +5,45 @@ import CustomButton, {ButtonClass} from "../button/CustomButton";
 import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
+import {useForm, SubmitHandler} from "react-hook-form";
 
 const ERRORS = {
-    credits: "Invalid email or password.",
-    unknown: "Unknown error.",
-    shortPassword: "Enter password (3 to 32 characters).",
+    credits: "Invalid email or password",
+    unknown: "Unknown error",
+    emailFormat: "Entered value does not match email format",
+    shortPassword: "Enter password (3 to 32 characters)",
+    fieldRequired: "This field is required"
+};
+
+type Inputs = {
+    email: string,
+    password: string,
 };
 
 const LoginForm: FC = () => {
     const {store} = useContext(Context);
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
     const [loginLoading, setLoginLoading] = useState<boolean>(false);
     const [registration, setRegistration] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
-    const emailRef = useRef<HTMLInputElement>(null);
+    const emailRef = useRef<HTMLInputElement | null>(null);
+    const {
+        register,
+        handleSubmit,
+        formState: {errors}
+    } = useForm<Inputs>();
+    const {ref, ...rest} = register('email', {
+        required: ERRORS.fieldRequired,
+        pattern: {
+            value: /\S+@\S+\.\S+/,
+            message: ERRORS.emailFormat
+        }
+    });
 
-    useEffect(() => {
-        setErrorMessage('');
-    }, [registration, email, password]);
-
-    useEffect(() => {
-        emailRef.current?.focus();
-    }, []);
-
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const onSubmit: SubmitHandler<Inputs> = async ({email, password}: Inputs) => {
+        console.log(email, password);
         setErrorMessage('');
         setLoginLoading(true);
         try {
-            if (password.length < 3) {
-                setErrorMessage(ERRORS.shortPassword);
-                return;
-            }
-
             if (registration) {
                 await store.registration(email, password);
             } else {
@@ -50,8 +55,8 @@ const LoginForm: FC = () => {
                     setErrorMessage(e.response?.data?.message);
                 } else {
                     setErrorMessage(ERRORS.credits);
+                    emailRef.current?.focus();
                 }
-                emailRef.current?.focus();
             } else {
                 setErrorMessage(ERRORS.unknown);
                 console.log(e.response?.data);
@@ -60,31 +65,38 @@ const LoginForm: FC = () => {
             setLoginLoading(false);
         }
         console.log('submit');
-    }
+    };
 
     return (
         <form className={classes.loginForm}
-              onSubmit={handleSubmit}>
+              onSubmit={handleSubmit(onSubmit)}>
             {registration
                 ? <h1>Welcome to Artfolio!</h1>
                 : <h1>Login to your Artfolio</h1>}
 
             <CustomInput
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    setEmail(e.target.value);
+                {...rest}
+                ref={(e) => {
+                    ref(e);
+                    emailRef.current = e;
                 }}
-                value={email}
+                name='email'
                 type='email'
                 placeholder='Email'
-                ref={emailRef}
             />
+            <p className={classes.errorMessage}>{errors.email?.message}</p>
+
             <PasswordInputWithToggle
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    setPassword(e.target.value);
-                }}
-                value={password}
+                {...register('password',
+                    {
+                        required: ERRORS.fieldRequired,
+                        minLength: {value: 3, message: ERRORS.shortPassword},
+                        maxLength: {value: 32, message: ERRORS.shortPassword}
+                    })}
                 placeholder='Password'
             />
+            <p className={classes.errorMessage}>{errors.password?.message}</p>
+
             {!registration && <CustomButton
                 buttonClass={ButtonClass.LINK}
                 style={{marginRight: '50px'}}
