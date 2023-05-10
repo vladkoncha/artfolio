@@ -46,10 +46,3 @@
     margin: 30px 50px 50px;
     font-size: 0.9em;
 }
-
-.errorMessage {
-    margin: 0;
-    color: #d00000;
-    font-size: 80%;
-    font-style: italic;
-}

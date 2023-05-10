@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, FormEvent, useContext, useEffect, useRef, useState} from 'react';
+import React, {FC, useContext, useEffect, useRef, useState} from 'react';
 import classes from './LoginForm.module.css';
 import CustomInput from "../input/CustomInput";
 import CustomButton, {ButtonClass} from "../button/CustomButton";
@@ -6,14 +6,9 @@ import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import {useForm, SubmitHandler} from "react-hook-form";
+import {ERRORS} from "../../errors/errors";
+import ErrorMessage from "../error-message/ErrorMessage";
 
-const ERRORS = {
-    credits: "Invalid email or password",
-    unknown: "Unknown error",
-    emailFormat: "Entered value does not match email format",
-    shortPassword: "Enter password (3 to 32 characters)",
-    fieldRequired: "This field is required"
-};
 
 type Inputs = {
     email: string,
@@ -38,6 +33,10 @@ const LoginForm: FC = () => {
             message: ERRORS.emailFormat
         }
     });
+
+    useEffect(() => {
+        emailRef.current?.focus();
+    }, []);
 
     const onSubmit: SubmitHandler<Inputs> = async ({email, password}: Inputs) => {
         console.log(email, password);
@@ -84,18 +83,18 @@ const LoginForm: FC = () => {
                 type='email'
                 placeholder='Email'
             />
-            <p className={classes.errorMessage}>{errors.email?.message}</p>
+            <ErrorMessage>{errors.email?.message}</ErrorMessage>
 
             <PasswordInputWithToggle
                 {...register('password',
                     {
                         required: ERRORS.fieldRequired,
-                        minLength: {value: 3, message: ERRORS.shortPassword},
-                        maxLength: {value: 32, message: ERRORS.shortPassword}
+                        minLength: {value: 3, message: ERRORS.passwordLength},
+                        maxLength: {value: 32, message: ERRORS.passwordLength}
                     })}
                 placeholder='Password'
             />
-            <p className={classes.errorMessage}>{errors.password?.message}</p>
+            <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
             {!registration && <CustomButton
                 buttonClass={ButtonClass.LINK}
@@ -104,7 +103,7 @@ const LoginForm: FC = () => {
                     console.log('forgot');
                 }}>Forgot Password?</CustomButton>}
 
-            {errorMessage && <p className={classes.errorMessage}>{errorMessage}</p>}
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
             <CustomButton
                 type='submit'
