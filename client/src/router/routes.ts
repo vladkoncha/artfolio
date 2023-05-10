@@ -1,5 +1,5 @@
 import EditProfileForm from "../components/edit-profile-form/EditProfileForm";
-import LoginForm from "../components/form/LoginForm";
+import LoginForm from "../components/login-form/LoginForm";
 
 export const privateRoutes = [
     {path: '/profile', component: EditProfileForm},

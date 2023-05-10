@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {ButtonHTMLAttributes, ReactNode} from 'react';
 import classes from './CustomButton.module.css';
 
 //TODO: классы — primary, secondary, link
@@ -7,7 +7,7 @@ export enum ButtonClass {
     LINK,
 }
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
     buttonClass: ButtonClass;
 }
