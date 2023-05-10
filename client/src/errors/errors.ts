@@ -1,16 +1,32 @@
 export const ERRORS = {
     credits: "Invalid email or password",
     unknown: "Unknown error",
-    emailFormat: "Entered value does not match email format",
-    passwordLength: "Enter password (3 to 32 characters)",
+    emailFormat: "Enter a valid email address",
     fieldRequired: "This field is required",
-    nameLength: "Name length must not exceed 100 characters",
-    usernameLength: "Username length must not exceed 32 characters",
-    usernameFormat: "Username must contain only alphabetical characters and numbers",
-    nameFormat: "Name must contain only alphabetical characters",
     maxLinks: "You can't add more than 10 links to your profile",
-    linkNameLength: "Link name length must not exceed 32 characters",
-    linkNameFormat: "Link Name must contain only alphabetical characters and numbers",
-    linkURLLength: "URL length must not exceed 100 characters",
     linkURLFormat: "Enter a valid URL",
 };
+
+export function getLengthError(propName: string, {minLength = 0, maxLength = 0}): string {
+    if ((minLength > 0) && (maxLength > 0)) {
+        return `Enter ${propName} (${minLength} to ${maxLength} characters)`;
+    } else if (minLength > 0) {
+        return `Enter ${propName} longer than ${minLength} characters`;
+    }
+    return `${propName} length must not exceed ${maxLength} characters`;
+}
+
+export function getFormatError(propName: string,
+                               {
+                                   alphabetical = false,
+                                   numbers = false
+                               }): string {
+    const formatProperties = [];
+    if (alphabetical) {
+        formatProperties.push("alphabetical characters");
+    }
+    if (numbers) {
+        formatProperties.push("numbers");
+    }
+    return `${propName} must contain only ${formatProperties.join(" and ")}`;
+}

@@ -6,14 +6,25 @@ import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import {useForm, SubmitHandler} from "react-hook-form";
-import {ERRORS} from "../../errors/errors";
+import {ERRORS, getLengthError} from "../../errors/errors";
 import ErrorMessage from "../error-message/ErrorMessage";
+import {object, string} from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 
 type Inputs = {
     email: string,
     password: string,
 };
+
+const schema = object().shape({
+    email: string().required(ERRORS.fieldRequired).email(ERRORS.emailFormat),
+    password: string().required(ERRORS.fieldRequired)
+        .min(3, getLengthError('Password',
+            {minLength: 3, maxLength: 32}))
+        .max(32, getLengthError('Password',
+            {minLength: 3, maxLength: 32}))
+});
 
 const LoginForm: FC = () => {
     const {store} = useContext(Context);
@@ -25,14 +36,8 @@ const LoginForm: FC = () => {
         register,
         handleSubmit,
         formState: {errors}
-    } = useForm<Inputs>();
-    const {ref, ...rest} = register('email', {
-        required: ERRORS.fieldRequired,
-        pattern: {
-            value: /\S+@\S+\.\S+/,
-            message: ERRORS.emailFormat
-        }
-    });
+    } = useForm<Inputs>({resolver: yupResolver(schema)});
+    const {ref, ...rest} = register('email');
 
     useEffect(() => {
         emailRef.current?.focus();
@@ -86,13 +91,9 @@ const LoginForm: FC = () => {
             <ErrorMessage>{errors.email?.message}</ErrorMessage>
 
             <PasswordInputWithToggle
-                {...register('password',
-                    {
-                        required: ERRORS.fieldRequired,
-                        minLength: {value: 3, message: ERRORS.passwordLength},
-                        maxLength: {value: 32, message: ERRORS.passwordLength}
-                    })}
+                {...register('password')}
                 placeholder='Password'
+                name='password'
             />
             <ErrorMessage>{errors.password?.message}</ErrorMessage>
 

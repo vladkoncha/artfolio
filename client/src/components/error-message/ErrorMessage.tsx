@@ -8,6 +8,9 @@ interface ParagraphProps {
 }
 
 const ErrorMessage = ({children, className, style}: ParagraphProps) => {
+    if (!children) {
+        return <></>;
+    }
     return (
         <p className={className || classes.errorMessage} style={style}>
                 {children}

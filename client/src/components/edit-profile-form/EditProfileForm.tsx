@@ -1,11 +1,13 @@
-import React, {useEffect, useRef} from 'react';
+import React, {Fragment, useEffect, useRef} from 'react';
 import CustomButton, {ButtonClass} from "../button/CustomButton";
 import classes from './EditProfileForm.module.css';
 import CustomInput from "../input/CustomInput";
 import CustomTextArea from "../textarea/CustomTextArea";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
-import {ERRORS} from "../../errors/errors";
+import {ERRORS, getFormatError, getLengthError} from "../../errors/errors";
 import ErrorMessage from "../error-message/ErrorMessage";
+import {array, object, string} from "yup";
+import {yupResolver} from "@hookform/resolvers/yup";
 
 type LinkInput = {
     name: string;
@@ -19,6 +21,33 @@ type Inputs = {
     links: LinkInput[]
 };
 
+const schema = object().shape({
+    name: string()
+        .max(100, getLengthError('Name', {maxLength: 100}))
+        .matches(/^[\p{L}\s]*$/u, // matches any alphabetical characters and any whitespace characters
+            getFormatError('Name', {alphabetical: true})),
+    username: string().required(ERRORS.fieldRequired)
+        .max(32, getLengthError('Username', {maxLength: 32}))
+        .matches(/^[a-zA-Z0-9]+$/, getFormatError('Username',
+            {alphabetical: true, numbers: true})),
+    bio: string().max(300),
+    links:
+        array()
+            .of(
+                object().shape({
+                    name: string()
+                        .required(ERRORS.fieldRequired)
+                        .max(32, getLengthError('Link Name',
+                            {maxLength: 32})),
+                    url: string()
+                        .required(ERRORS.fieldRequired)
+                        .url(ERRORS.linkURLFormat)
+                        .max(100, getLengthError('URL', {maxLength: 100})),
+                })
+            )
+            .max(10, ERRORS.maxLinks),
+});
+
 const EditProfileForm = () => {
     const nameRef = useRef<HTMLInputElement | null>(null);
     const {
@@ -26,7 +55,7 @@ const EditProfileForm = () => {
         handleSubmit,
         control,
         formState: {errors}
-    } = useForm<Inputs>();
+    } = useForm<Inputs>({resolver: yupResolver(schema)});
     const {
         fields,
         append,
@@ -34,18 +63,8 @@ const EditProfileForm = () => {
     } = useFieldArray({
         name: "links",
         control,
-        rules: {
-            maxLength: {value: 10, message: ERRORS.maxLinks}
-        }
     });
-    const {ref, ...rest} = register('name', {
-        required: false,
-        maxLength: {value: 100, message: ERRORS.nameLength},
-        pattern: {
-            value: /^[\p{L}\s]+$/u, // matches any alphabetical characters and any whitespace characters
-            message: ERRORS.nameFormat
-        }
-    });
+    const {ref, ...rest} = register('name');
     useEffect(() => {
         nameRef.current?.focus();
     }, []);
@@ -79,21 +98,12 @@ const EditProfileForm = () => {
                     <label>
                         Username (*)
                         <CustomInput
-                            {...register('username',
-                                {
-                                    required: ERRORS.fieldRequired,
-                                    maxLength: {value: 32, message: ERRORS.usernameLength},
-                                    pattern: {
-                                        value: /^[a-zA-Z0-9]+$/,
-                                        message: ERRORS.usernameFormat
-                                    }
-                                })}
+                            {...register('username')}
                             type='text'
                             placeholder='Username'
                         />
                     </label>
                     <ErrorMessage>{errors.username?.message}</ErrorMessage>
-
                 </div>
             </div>
 
@@ -103,11 +113,7 @@ const EditProfileForm = () => {
                     <label>
                         Bio
                         <CustomTextArea
-                            {...register('bio',
-                                {
-                                    required: false,
-                                    maxLength: 300,
-                                })}
+                            {...register('bio')}
                             placeholder='Enter a short Bio'
                             maxLength={300}
                         />
@@ -122,21 +128,14 @@ const EditProfileForm = () => {
                 <div className={classes.inputContainer}>
                     {fields.map((field, index) => {
                         return (
-                            <>
-                                <div key={field.id} className={classes.inputContainerRow}>
+                            <Fragment key={field.id}>
+                                <div className={classes.inputContainerRow}>
                                     <label>
                                         Link Name
                                         <CustomInput
                                             type='text'
                                             placeholder='Link Name'
-                                            {...register(`links.${index}.name`, {
-                                                required: ERRORS.fieldRequired,
-                                                maxLength: {value: 32, message: ERRORS.linkNameLength},
-                                                pattern: {
-                                                    value: /^[\p{L}\s]+$/u,
-                                                    message: ERRORS.linkNameFormat
-                                                }
-                                            })}
+                                            {...register(`links.${index}.name`)}
                                         />
                                     </label>
                                     <label>
@@ -144,14 +143,7 @@ const EditProfileForm = () => {
                                         <CustomInput
                                             type='text'
                                             placeholder='URL'
-                                            {...register(`links.${index}.url`, {
-                                                required: ERRORS.fieldRequired,
-                                                maxLength: {value: 100, message: ERRORS.linkURLLength},
-                                                pattern: {
-                                                    value: /(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)+\S*/,
-                                                    message: ERRORS.linkURLFormat
-                                                }
-                                            })}
+                                            {...register(`links.${index}.url`)}
                                         />
                                     </label>
                                     <button type="button" onClick={() => remove(index)}>
@@ -160,20 +152,23 @@ const EditProfileForm = () => {
                                 </div>
                                 <ErrorMessage>{errors.links?.[index]?.name?.message}</ErrorMessage>
                                 <ErrorMessage>{errors.links?.[index]?.url?.message}</ErrorMessage>
-                            </>
+                            </Fragment>
                         );
                     })}
-                    <button
-                        type="button"
-                        onClick={() => {
-                            append({
-                                name: "",
-                                url: ""
-                            });
-                        }}
-                    >
-                        Append
-                    </button>
+                    {(fields.length < 10)
+                        &&
+                        <button
+                            type="button"
+                            onClick={() => {
+                                append({
+                                    name: "",
+                                    url: ""
+                                });
+                            }}
+                        >
+                            Add Link
+                        </button>
+                    }
                 </div>
             </div>
 
