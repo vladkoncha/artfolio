@@ -1,27 +1,43 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import CustomButton, {ButtonClass} from "../button/CustomButton";
 import classes from './EditProfileForm.module.css';
 import CustomInput from "../input/CustomInput";
 import CustomTextArea from "../textarea/CustomTextArea";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import {ERRORS} from "../../errors/errors";
 import ErrorMessage from "../error-message/ErrorMessage";
 
+type LinkInput = {
+    name: string;
+    url: string;
+};
 
 type Inputs = {
     name: string,
     username: string,
     bio: string,
+    links: LinkInput[]
 };
-
 
 const EditProfileForm = () => {
     const nameRef = useRef<HTMLInputElement | null>(null);
     const {
         register,
         handleSubmit,
+        control,
         formState: {errors}
     } = useForm<Inputs>();
+    const {
+        fields,
+        append,
+        remove
+    } = useFieldArray({
+        name: "links",
+        control,
+        rules: {
+            maxLength: {value: 10, message: ERRORS.maxLinks}
+        }
+    });
     const {ref, ...rest} = register('name', {
         required: false,
         maxLength: {value: 100, message: ERRORS.nameLength},
@@ -100,31 +116,67 @@ const EditProfileForm = () => {
                 </div>
             </div>
 
-            {/*<label>*/}
-            {/*    Links:*/}
-            {/*    <ul>*/}
-            {/*        {links.map((link, index) => (*/}
-            {/*            <li key={index}>*/}
-            {/*                {link}*/}
-            {/*                <button type="button" onClick={() => handleLinkRemove(index)}>*/}
-            {/*                    Remove*/}
-            {/*                </button>*/}
-            {/*            </li>*/}
-            {/*        ))}*/}
-            {/*    </ul>*/}
-            {/*    /!*<input type="text" onChange={(event) => handleLinkAdd(event.target.value)}/>*!/*/}
-            {/*    /!*<button type="button" onClick={() => handleLinkAdd()}>*!/*/}
-            {/*    /!*    Add*!/*/}
-            {/*    /!*</button>*!/*/}
-            {/*</label>*/}
-            {/*<label>*/}
-            {/*    Banner Image:*/}
-            {/*    <input type="file" onChange={handleBannerImageChange}/>*/}
-            {/*</label>*/}
-            {/*<label>*/}
-            {/*    Profile Picture:*/}
-            {/*    <input type="file" onChange={handlePfpImageChange}/>*/}
-            {/*</label>*/}
+            <div className={classes.container}>
+                <h2>Add links to your social media or websites</h2>
+
+                <div className={classes.inputContainer}>
+                    {fields.map((field, index) => {
+                        return (
+                            <>
+                                <div key={field.id} className={classes.inputContainerRow}>
+                                    <label>
+                                        Link Name
+                                        <CustomInput
+                                            type='text'
+                                            placeholder='Link Name'
+                                            {...register(`links.${index}.name`, {
+                                                required: ERRORS.fieldRequired,
+                                                maxLength: {value: 32, message: ERRORS.linkNameLength},
+                                                pattern: {
+                                                    value: /^[\p{L}\s]+$/u,
+                                                    message: ERRORS.linkNameFormat
+                                                }
+                                            })}
+                                        />
+                                    </label>
+                                    <label>
+                                        Link URL
+                                        <CustomInput
+                                            type='text'
+                                            placeholder='URL'
+                                            {...register(`links.${index}.url`, {
+                                                required: ERRORS.fieldRequired,
+                                                maxLength: {value: 100, message: ERRORS.linkURLLength},
+                                                pattern: {
+                                                    value: /(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)+\S*/,
+                                                    message: ERRORS.linkURLFormat
+                                                }
+                                            })}
+                                        />
+                                    </label>
+                                    <button type="button" onClick={() => remove(index)}>
+                                        Delete
+                                    </button>
+                                </div>
+                                <ErrorMessage>{errors.links?.[index]?.name?.message}</ErrorMessage>
+                                <ErrorMessage>{errors.links?.[index]?.url?.message}</ErrorMessage>
+                            </>
+                        );
+                    })}
+                    <button
+                        type="button"
+                        onClick={() => {
+                            append({
+                                name: "",
+                                url: ""
+                            });
+                        }}
+                    >
+                        Append
+                    </button>
+                </div>
+            </div>
+
             <CustomButton
                 type='submit'
                 buttonClass={ButtonClass.MAIN}

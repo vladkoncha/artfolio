@@ -8,4 +8,9 @@ export const ERRORS = {
     usernameLength: "Username length must not exceed 32 characters",
     usernameFormat: "Username must contain only alphabetical characters and numbers",
     nameFormat: "Name must contain only alphabetical characters",
+    maxLinks: "You can't add more than 10 links to your profile",
+    linkNameLength: "Link name length must not exceed 32 characters",
+    linkNameFormat: "Link Name must contain only alphabetical characters and numbers",
+    linkURLLength: "URL length must not exceed 100 characters",
+    linkURLFormat: "Enter a valid URL",
 };
