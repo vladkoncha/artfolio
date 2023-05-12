@@ -1,5 +1,5 @@
 import React, {ButtonHTMLAttributes, ReactNode} from 'react';
-import classes from './CustomButton.module.css';
+import classes from './CustomButton.module.scss';
 
 //TODO: классы — primary, secondary, link
 export enum ButtonClass {

@@ -6,21 +6,32 @@
 
     background-color: #fff;
     border-radius: 10px;
-    position: relative;
-    /*margin: 2rem;*/
+    /*position: relative;*/
+    padding: 2.5vw;
 }
+
+.loginForm > h1 {
+    font-size: 1.7rem;
+    margin: 40px 0;
+    font-weight: 600;
+}
+
 
 .loginForm input {
     box-sizing: border-box;
-    max-width: 80vw;
+    max-width: 95vw;
     width: 30rem;
-    margin: 10px 50px;
-    font-size: 0.9rem;
+    margin: 10px 0;
 }
 
 @media screen and (min-width: 40rem) {
     .loginForm input {
         max-width: 60vw;
+        margin: 10px 50px;
+    }
+
+    .loginForm > h1 {
+        margin: 40px 50px;
     }
 }
 
@@ -35,14 +46,7 @@
     color: #005eff;
 }
 
-
-.loginForm > h1 {
-    font-size: 1.7rem;
-    margin: 40px 50px;
-    font-weight: normal;
-}
-
 .signUp {
-    margin: 30px 50px 50px;
+    margin-bottom: 40px;
     font-size: 0.9em;
 }

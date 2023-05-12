@@ -47,6 +47,9 @@ const LoginForm: FC = () => {
         console.log(email, password);
         setErrorMessage('');
         setLoginLoading(true);
+
+        await new Promise(resolve => setTimeout(resolve, 5000));
+
         try {
             if (registration) {
                 await store.registration(email, password);
@@ -76,7 +79,7 @@ const LoginForm: FC = () => {
               onSubmit={handleSubmit(onSubmit)}>
             {registration
                 ? <h1>Welcome to Artfolio!</h1>
-                : <h1>Login to your Artfolio</h1>}
+                : <h1>Log in to your Artfolio</h1>}
 
             <CustomInput
                 {...rest}
@@ -97,21 +100,20 @@ const LoginForm: FC = () => {
             />
             <ErrorMessage>{errors.password?.message}</ErrorMessage>
 
-            {!registration && <CustomButton
-                buttonClass={ButtonClass.LINK}
-                style={{marginRight: '50px'}}
-                onClick={() => {
-                    console.log('forgot');
-                }}>Forgot Password?</CustomButton>}
-
             {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
             <CustomButton
                 type='submit'
                 buttonClass={ButtonClass.MAIN}
                 disabled={loginLoading}>
-                {registration ? 'Register' : 'Login'}
+                {registration ? 'Create account' : 'Log in'}
             </CustomButton>
+
+            {!registration && <CustomButton
+                buttonClass={ButtonClass.LINK}
+                onClick={() => {
+                    console.log('forgot');
+                }}>Forgot Password?</CustomButton>}
 
             <p className={classes.signUp}>
                 {!registration ? "Don't have an account? " : "Already have an account? "}

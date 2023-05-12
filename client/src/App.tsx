@@ -1,5 +1,5 @@
 import React, {useContext, useLayoutEffect} from 'react';
-import './App.css';
+import './styles/App.scss';
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
 import CustomButton, {ButtonClass} from "./components/button/CustomButton";

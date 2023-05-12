@@ -1,0 +1,76 @@
+@use '../../styles/base';
+
+button {
+  line-height: 2;
+}
+
+.main {
+  padding: 5px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  color: base.$primary-color;
+  border: 1px solid base.$primary-color;
+  border-radius: 10px;
+  background-color: #fff;
+
+  max-width: 95vw;
+  width: 30rem;
+  margin: 20px 0;
+
+  transition: 0.2s ease-in;
+}
+
+@media screen and (min-width: 40rem) {
+  .main {
+    max-width: 60vw;
+    margin: 20px 50px;
+  }
+}
+
+.main:not(:disabled):hover {
+  transform: scale(1.02);
+  color: #fff;
+  background-color: base.$primary-color;
+}
+
+@keyframes background {
+  0% {
+    background-color: base.$primary-color;
+    color: #fff;
+  }
+  50% {
+    background-color: base.$secondary-color;
+    color: #fff;
+  }
+  100% {
+    background-color: base.$primary-color;
+    color: #fff;
+  }
+}
+
+.main[disabled] {
+  border-color: transparent;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  animation: background 2s infinite;
+}
+
+.linkButton {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+  color: #404040;
+
+  font-size: 14px;
+
+  max-width: none;
+  width: auto;
+}
+
+.linkButton:hover {
+  color: #000;
+  text-decoration: none;
+}
