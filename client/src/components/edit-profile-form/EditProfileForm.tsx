@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import CustomButton, {ButtonClass} from "../button/CustomButton";
-import classes from './EditProfileForm.module.css';
+import classes from './EditProfileForm.module.scss';
 import CustomInput from "../input/CustomInput";
 import CustomTextArea from "../textarea/CustomTextArea";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
@@ -101,15 +101,17 @@ const EditProfileForm = () => {
             <div className={classes.container}>
                 <h2>Add a short description of you and your works</h2>
                 <div className={classes.inputContainer}>
-                    <label>
+                    <label htmlFor='bio'>
                         Bio
-                        <CustomTextArea
-                            {...register('bio')}
-                            placeholder='Enter a short Bio'
-                            maxLength={300}
-                        />
-                        <ErrorMessage>{errors.bio?.message}</ErrorMessage>
                     </label>
+                    <CustomTextArea
+                        {...register('bio')}
+                        placeholder='Enter a short Bio'
+                        maxLength={300}
+                        name='bio'
+                    />
+                    <ErrorMessage>{errors.bio?.message}</ErrorMessage>
+
                 </div>
             </div>
 

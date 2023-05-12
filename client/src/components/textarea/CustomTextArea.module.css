@@ -7,6 +7,10 @@
     font-size: 1rem;
     border-radius: 10px;
 
+    box-sizing: border-box;
+
+    /*width: 96%;*/
+
     font-family: inherit;
     min-height: 3rem;
 }

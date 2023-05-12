@@ -7,12 +7,15 @@
   border-top: 0;
   border-radius: 10px;
   transition: background-color 0.2s ease-in-out;
+  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 .inputContainer:hover,
 .inputContainer:focus-within {
   background-color: rgba(0, 0, 0, 0.075);
   outline: 0.1em solid base.$primary-color;
+  cursor: text;
 }
 
 label {
@@ -29,9 +32,9 @@ label {
 .customInput {
   border: 0;
   background-color: transparent;
-  line-height: 2;
+  line-height: 1.75;
   display: block;
-  //border-bottom: 1px solid black;
+  width: 100%;
 }
 
 .customInput:focus {
@@ -40,18 +43,19 @@ label {
   z-index: 1;
 }
 
-.login {
-  background-image: url("../../media/icons/login-mail.svg");
+@mixin iconSpace() {
   padding-left: 2.5em; /* adjust the padding to accommodate the icon */
   background-repeat: no-repeat;
   background-position: 0.25em center;
   background-size: 1.5em 1.5em; /* adjust the size of the icon */
 }
 
+.login {
+  background-image: url("../../media/icons/login-mail.svg");
+  @include iconSpace;
+}
+
 .password {
   background-image: url("../../media/icons/password-key.svg");
-  padding-left: 2em; /* adjust the padding to accommodate the icon */
-  background-repeat: no-repeat;
-  background-position: 0.25em center;
-  background-size: 1.5em 1.5em; /* adjust the size of the icon */
+  @include iconSpace;
 }
