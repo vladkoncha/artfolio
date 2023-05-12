@@ -1,12 +1,16 @@
-import React, {forwardRef, Ref, InputHTMLAttributes} from 'react';
-import classes from './CustomInput.module.css';
+import React, {forwardRef, Ref, InputHTMLAttributes, useRef} from 'react';
+import classes from './CustomInput.module.scss';
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
+    label: string;
+    name: string;
     type?: HTMLInputElement['type'];
 }
 
-const CustomInput = forwardRef(
+const CustomInput = forwardRef<HTMLInputElement, any>(
     (props: CustomInputProps, ref: Ref<HTMLInputElement>) => {
+        const containerRef = useRef<HTMLDivElement>(null);
+
         let inputClasses = [classes.customInput];
         if (props?.type === 'email') {
             inputClasses.push(classes.login);
@@ -14,8 +18,18 @@ const CustomInput = forwardRef(
         if (props?.type === 'password') {
             inputClasses.push(classes.password);
         }
+
+        const handleClick = () => {
+            if (containerRef.current !== null) {
+                containerRef.current.querySelector('input')?.focus();
+            }
+        };
+
         return (
-            <input ref={ref} className={inputClasses.join(' ')} {...props} />
+            <div className={classes.inputContainer} ref={containerRef} onClick={handleClick}>
+                <label htmlFor={props.name}>{props.label}</label>
+                <input {...props} name={props.name} ref={ref} className={inputClasses.join(' ')}/>
+            </div>
         );
     }
 );

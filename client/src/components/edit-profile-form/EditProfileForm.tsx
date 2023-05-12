@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useRef} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import CustomButton, {ButtonClass} from "../button/CustomButton";
 import classes from './EditProfileForm.module.css';
 import CustomInput from "../input/CustomInput";
@@ -49,9 +49,9 @@ const schema = object().shape({
 });
 
 const EditProfileForm = () => {
-    const nameRef = useRef<HTMLInputElement | null>(null);
     const {
         register,
+        setFocus,
         handleSubmit,
         control,
         formState: {errors}
@@ -64,9 +64,8 @@ const EditProfileForm = () => {
         name: "links",
         control,
     });
-    const {ref, ...rest} = register('name');
     useEffect(() => {
-        nameRef.current?.focus();
+        setFocus('name');
     }, []);
 
     const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
@@ -81,28 +80,20 @@ const EditProfileForm = () => {
                 <h2>Enter your details</h2>
 
                 <div className={classes.inputContainer}>
-                    <label>
-                        Name
-                        <CustomInput
-                            {...rest}
-                            ref={(e) => {
-                                ref(e);
-                                nameRef.current = e;
-                            }}
-                            type='text'
-                            placeholder='Name'
-                        />
-                    </label>
+                    <CustomInput
+                        {...register('name')}
+                        label='Name'
+                        type='text'
+                        placeholder='Name'
+                    />
                     <ErrorMessage>{errors.name?.message}</ErrorMessage>
 
-                    <label>
-                        Username (*)
-                        <CustomInput
-                            {...register('username')}
-                            type='text'
-                            placeholder='Username'
-                        />
-                    </label>
+                    <CustomInput
+                        {...register('username')}
+                        label='Username (*)'
+                        type='text'
+                        placeholder='Username'
+                    />
                     <ErrorMessage>{errors.username?.message}</ErrorMessage>
                 </div>
             </div>
@@ -130,22 +121,18 @@ const EditProfileForm = () => {
                         return (
                             <Fragment key={field.id}>
                                 <div className={classes.inputContainerRow}>
-                                    <label>
-                                        Link Name
-                                        <CustomInput
-                                            type='text'
-                                            placeholder='Link Name'
-                                            {...register(`links.${index}.name`)}
-                                        />
-                                    </label>
-                                    <label>
-                                        Link URL
-                                        <CustomInput
-                                            type='text'
-                                            placeholder='URL'
-                                            {...register(`links.${index}.url`)}
-                                        />
-                                    </label>
+                                    <CustomInput
+                                        label='Link Name'
+                                        type='text'
+                                        placeholder='Link Name'
+                                        {...register(`links.${index}.name`)}
+                                    />
+                                    <CustomInput
+                                        label='Link URL'
+                                        type='text'
+                                        placeholder='URL'
+                                        {...register(`links.${index}.url`)}
+                                    />
                                     <button type="button" onClick={() => remove(index)}>
                                         Delete
                                     </button>

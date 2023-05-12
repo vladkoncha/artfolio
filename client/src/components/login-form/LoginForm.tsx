@@ -34,21 +34,18 @@ const LoginForm: FC = () => {
     const emailRef = useRef<HTMLInputElement | null>(null);
     const {
         register,
+        setFocus,
         handleSubmit,
         formState: {errors}
     } = useForm<Inputs>({resolver: yupResolver(schema)});
-    const {ref, ...rest} = register('email');
 
     useEffect(() => {
-        emailRef.current?.focus();
+        setFocus('email');
     }, []);
 
     const onSubmit: SubmitHandler<Inputs> = async ({email, password}: Inputs) => {
-        console.log(email, password);
         setErrorMessage('');
         setLoginLoading(true);
-
-        await new Promise(resolve => setTimeout(resolve, 5000));
 
         try {
             if (registration) {
@@ -82,11 +79,8 @@ const LoginForm: FC = () => {
                 : <h1>Log in to your Artfolio</h1>}
 
             <CustomInput
-                {...rest}
-                ref={(e) => {
-                    ref(e);
-                    emailRef.current = e;
-                }}
+                {...register('email')}
+                label='Email'
                 name='email'
                 type='email'
                 placeholder='Email'

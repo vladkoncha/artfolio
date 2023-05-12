@@ -21,13 +21,11 @@
     box-sizing: border-box;
     max-width: 95vw;
     width: 30rem;
-    margin: 10px 0;
 }
 
 @media screen and (min-width: 40rem) {
     .loginForm input {
         max-width: 60vw;
-        margin: 10px 50px;
     }
 
     .loginForm > h1 {
