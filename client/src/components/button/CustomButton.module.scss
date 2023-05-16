@@ -21,15 +21,17 @@ button {
   @include buttonSettings;
 
   line-height: 2.5;
-  color: base.$primary-color;
-  border: 1px solid base.$primary-color;
-  background-color: #fff;
+
+  color: #fff;
+  border: 1px solid base.$secondary-color;
+  background-color: base.$secondary-color;
 
   &:not(:disabled):hover {
     transform: scale(1.02);
-    color: #fff;
+    border: 1px solid base.$primary-color;
     background-color: base.$primary-color;
   }
+
 
   &[disabled] {
     border-color: transparent;
@@ -42,14 +44,13 @@ button {
 .secondary {
   @include buttonSettings;
 
-  color: #fff;
+  color: base.$secondary-color;
   border: 1px solid base.$secondary-color;
-  background-color: base.$secondary-color;
+  background-color: #fff;
 
   &:not(:disabled):hover {
     color: #fff;
-    border: 1px solid base.$primary-color;
-    background-color: base.$primary-color;
+    background-color: base.$secondary-color;
   }
 }
 
