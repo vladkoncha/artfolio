@@ -11,12 +11,17 @@ const CustomInput = forwardRef<HTMLInputElement, any>(
     (props: CustomInputProps, ref: Ref<HTMLInputElement>) => {
         const containerRef = useRef<HTMLDivElement>(null);
 
-        let inputClasses = [classes.customInput];
+        let inputClasses = new Set([classes.customInput]);
+        if (props.className) {
+            [...props?.className.split(' ')]
+                .reduce((inputClasses, item) => inputClasses.add(item), inputClasses);
+        }
+        console.log(inputClasses)
         if (props?.type === 'email') {
-            inputClasses.push(classes.login);
+            inputClasses.add(classes.login);
         }
         if (props?.type === 'password') {
-            inputClasses.push(classes.password);
+            inputClasses.add(classes.password);
         }
 
         const handleClick = () => {
@@ -28,7 +33,7 @@ const CustomInput = forwardRef<HTMLInputElement, any>(
         return (
             <div className={classes.inputContainer} ref={containerRef} onClick={handleClick}>
                 <label htmlFor={props.name}>{props.label}</label>
-                <input {...props} name={props.name} ref={ref} className={inputClasses.join(' ')}/>
+                <input {...props} name={props.name} ref={ref} className={Array.from(inputClasses).join(' ')}/>
             </div>
         );
     }
