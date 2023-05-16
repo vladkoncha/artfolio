@@ -4,6 +4,7 @@ import AuthService from "../services/AuthService";
 import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
 import {API_URL} from "../http";
+import UserService from "../services/UserService";
 
 export default class Store {
     user = {} as IUser;
@@ -72,5 +73,13 @@ export default class Store {
         } finally {
             this.setLoading(false);
         }
+    }
+
+    async updateProfileInfo(user: IUser) {
+        const response = await UserService.updateProfileInfo(user);
+        console.log(response);
+        localStorage.setItem('token', response.data.accessToken);
+        this.setAuth(true);
+        this.setUser(response.data.user);
     }
 }

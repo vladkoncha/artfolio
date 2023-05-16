@@ -1,14 +1,15 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useContext, useEffect, useState} from 'react';
 import CustomButton, {ButtonClass} from "../button/CustomButton";
 import classes from './EditProfileForm.module.scss';
 import CustomInput from "../input/CustomInput";
 import CustomTextArea from "../textarea/CustomTextArea";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
-import {ERRORS, getFormatError, getLengthError} from "../../errors/errors";
 import ErrorMessage from "../error-message/ErrorMessage";
-import {array, object, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import IconButton, {IconType} from "../button/icon-button/IconButton";
+import {schema} from "./formSchema";
+import {ERRORS} from "../../errors/errors";
+import {Context} from "../../index";
 
 type LinkInput = {
     name: string;
@@ -22,32 +23,10 @@ type Inputs = {
     links: LinkInput[]
 };
 
-const schema = object().shape({
-    name: string()
-        .max(100, getLengthError('Name', {maxLength: 100}))
-        .matches(/^[\p{L}\s]*$/u, // matches any alphabetical characters and any whitespace characters
-            getFormatError('Name', {alphabetical: true})),
-    username: string().required(ERRORS.fieldRequired)
-        .max(32, getLengthError('Username', {maxLength: 32}))
-        .matches(/^[a-zA-Z0-9]+$/, getFormatError('Username',
-            {alphabetical: true, numbers: true})),
-    bio: string().max(300),
-    links:
-        array()
-            .of(
-                object().shape({
-                    name: string()
-                        .max(32, getLengthError('Link Name',
-                            {maxLength: 32})),
-                    url: string()
-                        .url(ERRORS.linkURLFormat)
-                        .max(100, getLengthError('URL', {maxLength: 100})),
-                })
-            )
-            .max(10, ERRORS.maxLinks),
-});
-
 const EditProfileForm = () => {
+    const {store} = useContext(Context);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [submitLoading, setSubmitLoading] = useState(false);
     const {
         register,
         setFocus,
@@ -73,8 +52,22 @@ const EditProfileForm = () => {
     }, []);
 
     const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-        console.log(data);
-    }
+        setErrorMessage('');
+        setSubmitLoading(true);
+        try {
+            const user = store.user;
+            user.name = data.name || "";
+            user.username = data.username || "";
+            user.bio = data.bio || "";
+            user.links = data.links.filter(link => link.name && link.url);
+            await store.updateProfileInfo(user);
+        } catch (e: any) {
+            setErrorMessage(ERRORS.unknown);
+            console.log(e.response?.data);
+        } finally {
+            setSubmitLoading(false);
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={classes.editProfileForm}>
@@ -103,7 +96,7 @@ const EditProfileForm = () => {
             </div>
 
             <div className={classes.container}>
-                <h2>Add a short description of you and your works</h2>
+                <h2>Tell about yourself and your works</h2>
                 <div className={classes.inputContainer}>
                     <label htmlFor='bio'>
                         Bio
@@ -149,14 +142,14 @@ const EditProfileForm = () => {
                     {(fields.length < 10)
                         &&
                         <CustomButton
-                            type="button"
                             onClick={() => {
                                 append({
                                     name: "",
                                     url: ""
                                 });
                             }}
-                            buttonClass={ButtonClass.SECONDARY}>
+                            buttonClass={ButtonClass.SECONDARY}
+                        >
                             Add Link
                         </CustomButton>
                     }
@@ -164,11 +157,13 @@ const EditProfileForm = () => {
             </div>
 
             <CustomButton
+                disabled={submitLoading}
                 type='submit'
                 buttonClass={ButtonClass.PRIMARY}
             >
                 Save Changes
             </CustomButton>
+            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         </form>
     );
 };
