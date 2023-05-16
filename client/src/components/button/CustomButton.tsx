@@ -1,11 +1,17 @@
 import React, {ButtonHTMLAttributes, ReactNode} from 'react';
 import classes from './CustomButton.module.scss';
 
-//TODO: классы — primary, secondary, link
 export enum ButtonClass {
-    MAIN,
+    PRIMARY,
+    SECONDARY,
     LINK,
 }
+
+const buttonClassToClassNameMap: Record<ButtonClass, string> = {
+    [ButtonClass.PRIMARY]: classes.primary,
+    [ButtonClass.SECONDARY]: classes.secondary,
+    [ButtonClass.LINK]: classes.linkButton,
+};
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
@@ -13,8 +19,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const CustomButton = ({children, buttonClass, type = 'button', ...props}: ButtonProps) => {
-    const buttonClassName =
-        buttonClass === ButtonClass.MAIN ? classes.main : classes.linkButton;
+    const buttonClassName = buttonClassToClassNameMap[buttonClass] || '';
 
     return (
         <button type={type} {...props} className={buttonClassName}>

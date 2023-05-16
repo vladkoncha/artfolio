@@ -8,6 +8,7 @@ import {ERRORS, getFormatError, getLengthError} from "../../errors/errors";
 import ErrorMessage from "../error-message/ErrorMessage";
 import {array, object, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
+import IconButton, {IconType} from "../button/icon-button/IconButton";
 
 type LinkInput = {
     name: string;
@@ -36,11 +37,9 @@ const schema = object().shape({
             .of(
                 object().shape({
                     name: string()
-                        .required(ERRORS.fieldRequired)
                         .max(32, getLengthError('Link Name',
                             {maxLength: 32})),
                     url: string()
-                        .required(ERRORS.fieldRequired)
                         .url(ERRORS.linkURLFormat)
                         .max(100, getLengthError('URL', {maxLength: 100})),
                 })
@@ -55,7 +54,12 @@ const EditProfileForm = () => {
         handleSubmit,
         control,
         formState: {errors}
-    } = useForm<Inputs>({resolver: yupResolver(schema)});
+    } = useForm<Inputs>({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            links: [{name: "", url: ""}]
+        }
+    });
     const {
         fields,
         append,
@@ -135,9 +139,7 @@ const EditProfileForm = () => {
                                         placeholder='URL'
                                         {...register(`links.${index}.url`)}
                                     />
-                                    <button type="button" onClick={() => remove(index)}>
-                                        Delete
-                                    </button>
+                                    <IconButton iconType={IconType.REMOVE} type="button" onClick={() => remove(index)}/>
                                 </div>
                                 <ErrorMessage>{errors.links?.[index]?.name?.message}</ErrorMessage>
                                 <ErrorMessage>{errors.links?.[index]?.url?.message}</ErrorMessage>
@@ -146,7 +148,7 @@ const EditProfileForm = () => {
                     })}
                     {(fields.length < 10)
                         &&
-                        <button
+                        <CustomButton
                             type="button"
                             onClick={() => {
                                 append({
@@ -154,16 +156,16 @@ const EditProfileForm = () => {
                                     url: ""
                                 });
                             }}
-                        >
+                            buttonClass={ButtonClass.SECONDARY}>
                             Add Link
-                        </button>
+                        </CustomButton>
                     }
                 </div>
             </div>
 
             <CustomButton
                 type='submit'
-                buttonClass={ButtonClass.MAIN}
+                buttonClass={ButtonClass.PRIMARY}
             >
                 Save Changes
             </CustomButton>

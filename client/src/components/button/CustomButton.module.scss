@@ -4,34 +4,61 @@ button {
   line-height: 2;
 }
 
-.main {
+@mixin buttonSettings() {
   padding: 5px 15px;
   font-size: 14px;
   font-weight: bold;
   cursor: pointer;
-  color: base.$primary-color;
-  border: 1px solid base.$primary-color;
   border-radius: 10px;
-  background-color: #fff;
-
   max-width: 95vw;
   width: 30rem;
   margin: 20px 0;
-
-  transition: 0.2s ease-in;
+  transition: 0.15s ease-in;
+  align-self: center;
 }
 
-@media screen and (min-width: 40rem) {
-  .main {
-    max-width: 60vw;
-    margin: 20px 50px;
+.primary {
+  @include buttonSettings;
+
+  line-height: 2.5;
+  color: base.$primary-color;
+  border: 1px solid base.$primary-color;
+  background-color: #fff;
+
+  &:not(:disabled):hover {
+    transform: scale(1.02);
+    color: #fff;
+    background-color: base.$primary-color;
+  }
+
+  &[disabled] {
+    border-color: transparent;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+    animation: background 2s infinite;
   }
 }
 
-.main:not(:disabled):hover {
-  transform: scale(1.02);
+.secondary {
+  @include buttonSettings;
+
   color: #fff;
-  background-color: base.$primary-color;
+  border: 1px solid base.$secondary-color;
+  background-color: base.$secondary-color;
+
+  &:not(:disabled):hover {
+    color: #fff;
+    border: 1px solid base.$primary-color;
+    background-color: base.$primary-color;
+  }
+}
+
+@media screen and (min-width: 40rem) {
+  .primary,
+  .secondary {
+    max-width: 60vw;
+    margin: 20px 50px;
+  }
 }
 
 @keyframes background {
@@ -47,13 +74,6 @@ button {
     background-color: base.$primary-color;
     color: #fff;
   }
-}
-
-.main[disabled] {
-  border-color: transparent;
-  cursor: not-allowed;
-  transition: all 0.3s ease;
-  animation: background 2s infinite;
 }
 
 .linkButton {

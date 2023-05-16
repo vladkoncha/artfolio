@@ -24,7 +24,7 @@ function App() {
             </BrowserRouter>
 
             <CustomButton
-                buttonClass={ButtonClass.MAIN}
+                buttonClass={ButtonClass.PRIMARY}
                 onClick={() => store.logout()}>
                 Logout
             </CustomButton>

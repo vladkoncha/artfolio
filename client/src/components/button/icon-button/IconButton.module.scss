@@ -1,0 +1,23 @@
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  height: 3rem;
+  transition: all 0.1s ease-in-out;
+  align-self: center;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+  }
+
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

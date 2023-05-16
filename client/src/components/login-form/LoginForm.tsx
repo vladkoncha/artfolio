@@ -98,7 +98,7 @@ const LoginForm: FC = () => {
 
             <CustomButton
                 type='submit'
-                buttonClass={ButtonClass.MAIN}
+                buttonClass={ButtonClass.PRIMARY}
                 disabled={loginLoading}>
                 {registration ? 'Create account' : 'Log in'}
             </CustomButton>
