@@ -36,7 +36,10 @@ const EditProfileForm = () => {
     } = useForm<Inputs>({
         resolver: yupResolver(schema),
         defaultValues: {
-            links: [{name: "", url: ""}]
+            name: store.user.name,
+            username: store.user.username,
+            bio: store.user.bio,
+            links: store.user.links.concat([{name: "", url: ""}])
         }
     });
     const {
