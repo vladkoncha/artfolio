@@ -70,6 +70,16 @@ class UserController {
             next(e);
         }
     }
+
+    async updateProfileInfo(req: Request, res: Response, next: NextFunction) {
+        try {
+            const {id, name, username, bio, links} = req.body;
+            const userData = await userService.updateProfileInfo(id, name, username, bio, links);
+            return res.json(userData);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 export default new UserController();

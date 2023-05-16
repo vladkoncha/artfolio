@@ -76,6 +76,23 @@ class UserService {
     async getAllUsers() {
         return UserModel.find();
     }
+
+    async updateProfileInfo(
+        id: string,
+        name: string,
+        username: string,
+        bio: string,
+        links: { name: string, url: string }[],
+    ) {
+        console.log(id);
+        await UserModel.updateOne({_id: id}, {$set: {name, username, bio, links}});
+
+        const user = await UserModel.findOne({_id:id});
+        const userDto = new UserDto(user);
+        const tokens = tokenService.generateTokens({...userDto});
+        await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        return {...tokens, user: userDto};
+    }
 }
 
 export default new UserService();
