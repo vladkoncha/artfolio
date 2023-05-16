@@ -1,3 +1,5 @@
+@use '../../styles/base';
+
 .editProfileForm {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,8 @@
 
   background-color: #fff;
   border-radius: 10px;
-  max-width: 900px;
+  max-width: 1000px;
+  border: 1px solid base.$primary-color;
 }
 
 .editProfileForm textarea {
@@ -18,13 +21,6 @@
 .editProfileForm > h1 {
   margin-bottom: 2em;
   text-align: center;
-}
-
-.editProfileForm label {
-  display: grid;
-  text-align: left;
-  font-weight: bold;
-  gap: 5px;
 }
 
 .container {
@@ -50,9 +46,13 @@
 }
 
 .inputContainerRow {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  //display: flex;
+  //flex-direction: row;
+  //justify-content: space-between;
+
+  display: grid;
+  grid-template-columns: 6fr 6fr 1fr;
+  gap: 0.5em;
 }
 
 .editProfileForm h2 {

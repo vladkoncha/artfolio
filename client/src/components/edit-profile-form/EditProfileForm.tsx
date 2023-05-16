@@ -106,12 +106,12 @@ const EditProfileForm = () => {
                     </label>
                     <CustomTextArea
                         {...register('bio')}
+                        control={control}
                         placeholder='Enter a short Bio'
                         maxLength={300}
                         name='bio'
                     />
                     <ErrorMessage>{errors.bio?.message}</ErrorMessage>
-
                 </div>
             </div>
 

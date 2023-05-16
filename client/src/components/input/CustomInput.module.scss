@@ -14,7 +14,7 @@
 .inputContainer:hover,
 .inputContainer:focus-within {
   background-color: rgba(0, 0, 0, 0.075);
-  outline: 0.1em solid base.$primary-color;
+  outline: 1px solid base.$primary-color;
   cursor: text;
 }
 

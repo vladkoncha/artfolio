@@ -1,11 +1,24 @@
-import React, {forwardRef, Ref, InputHTMLAttributes} from 'react';
-import classes from './CustomTextArea.module.css';
+import React, {forwardRef, ForwardedRef, InputHTMLAttributes} from 'react';
+import classes from './CustomTextArea.module.scss';
+import {Control, useWatch} from "react-hook-form";
 
-// TODO: counter слов под полем, если есть лимит
-const CustomTextArea = forwardRef(
-    (props: InputHTMLAttributes<HTMLTextAreaElement>, ref: Ref<HTMLTextAreaElement>) => {
+interface TextAreaProps extends InputHTMLAttributes<HTMLTextAreaElement> {
+    maxLength?: number;
+    name: string;
+    control: Control<any>;
+}
+
+const CustomTextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+    ({name, maxLength, control, ...rest},
+     ref: ForwardedRef<HTMLTextAreaElement>) => {
+        const areaValue = useWatch({control, name: name, defaultValue: ''});
+
         return (
-            <textarea className={classes.customTextArea} ref={ref} {...props} />
+            <div className={classes.areaContainer}>
+                <textarea {...rest} maxLength={maxLength} name={name} className={classes.customTextArea} ref={ref}/>
+                {maxLength &&
+                    <p>{areaValue.length}/{maxLength}</p>}
+            </div>
         );
     }
 );

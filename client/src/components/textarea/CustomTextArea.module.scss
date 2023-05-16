@@ -1,0 +1,35 @@
+@use '../../styles/base';
+
+
+.areaContainer {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    align-self: flex-end;
+    margin: 0.25em 0;
+    font-size: 90%;
+  }
+}
+
+.customTextArea {
+  padding: 5px 10px;
+  margin: 5px 0;
+  border: 0;
+  background-color: #F2F2F2;
+  line-height: 1.5;
+  font-size: 1rem;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+
+  font-family: inherit;
+  min-height: 3rem;
+}
+
+.customTextArea:focus {
+  outline: 1px solid base.$primary-color;
+
+  position: relative;
+  z-index: 1;
+}
