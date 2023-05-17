@@ -78,8 +78,6 @@ export default class Store {
     async updateProfileInfo(user: IUser) {
         const response = await UserService.updateProfileInfo(user);
         console.log(response);
-        localStorage.setItem('token', response.data.accessToken);
-        this.setAuth(true);
         this.setUser(response.data.user);
     }
 }

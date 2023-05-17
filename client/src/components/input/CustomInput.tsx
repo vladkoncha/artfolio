@@ -16,7 +16,6 @@ const CustomInput = forwardRef<HTMLInputElement, any>(
             [...props?.className.split(' ')]
                 .reduce((inputClasses, item) => inputClasses.add(item), inputClasses);
         }
-        console.log(inputClasses)
         if (props?.type === 'email') {
             inputClasses.add(classes.login);
         }
