@@ -1,0 +1,49 @@
+@use '../../styles/base';
+
+.profileContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 100vh;
+
+  border: 0;
+}
+
+.profileInfo {
+  max-width: 1000px;
+}
+
+.topContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bannerImage {
+  background-color: grey;
+  height: 20vh;
+  width: 100vw;
+}
+
+.profileImage {
+  background-color: darkblue;
+  border-radius: 50%;
+  height: 8rem;
+  width: 8rem;
+  position: relative;
+  top: -4rem;
+}
+
+@media screen and (min-width: 40em) {
+  .profileContainer {
+    align-items: center;
+
+    h2 {
+      text-align: right;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}

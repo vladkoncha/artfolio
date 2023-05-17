@@ -1,0 +1,17 @@
+@use '../../styles/base';
+
+.linksListContainer {
+  position: relative;
+}
+
+.linksList {
+  position: absolute;
+  top: 100%;
+
+  min-width: 20vw;
+
+  border-radius: 10px;
+  border: 1px solid base.$primary-color;
+  padding: 1rem;
+  background-color: base.$back-color;
+}
