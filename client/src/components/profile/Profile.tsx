@@ -16,6 +16,10 @@ const Profile = () => {
             <section className={classes.profileInfo}>
                 <div className={classes.topContainer}>
                     <div className={classes.profileImage}></div>
+                    <div className={classes.nameContainer}>
+                        <p><b>{store.user.name}</b></p>
+                        <p><i>@{store.user.username}</i></p>
+                    </div>
                     <LinksList links={store.user.links}/>
                     <CustomButton
                         buttonClass={ButtonClass.SECONDARY}
@@ -24,8 +28,7 @@ const Profile = () => {
                     </CustomButton>
                 </div>
 
-                <p><b>{store.user.name}</b></p>
-                <p><i>@{store.user.username}</i></p>
+
                 <p>{store.user.bio}</p>
             </section>
         </div>

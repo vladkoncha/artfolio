@@ -1,6 +1,8 @@
 import React, {MouseEvent, useEffect, useRef, useState} from 'react';
 import classes from './LinksList.module.scss';
 import {ILink} from "../../models/IUser";
+import CustomButton, {ButtonClass} from "../button/CustomButton";
+import {CSSTransition} from 'react-transition-group';
 
 interface LinksListProps {
     links: ILink[];
@@ -35,27 +37,36 @@ const LinkList = ({links}: LinksListProps) => {
 
     return (
         <div className={classes.linksListContainer}>
-            <button onClick={toggleList}>
+            <CustomButton onClick={toggleList} buttonClass={ButtonClass.PRIMARY}>
                 {'Links'}
-            </button>
-            {isOpen && (
+            </CustomButton>
+            <CSSTransition
+                in={isOpen}
+                timeout={200}
+                classNames={{
+                    enter: classes.listEnter,
+                    enterActive: classes.listEnterActive,
+                    exit: classes.listExit,
+                    exitActive: classes.listExitActive,
+                }}
+                unmountOnExit
+            >
                 <ul
-                    className={classes.linksList}
+                    className={classes.list}
                     ref={listRef}
                 >
                     {links.map(link => {
                         return (
-                            <li key={link.name}>
-                                <button
-                                    onClick={() => handleLinkClick(link.url)}
-                                >
-                                    {link.name}
-                                </button>
+                            <li
+                                key={link.name}
+                                onClick={() => handleLinkClick(link.url)}
+                            >
+                                {link.name}
                             </li>
                         );
                     })}
                 </ul>
-            )}
+            </CSSTransition>
         </div>
     );
 };

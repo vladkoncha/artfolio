@@ -1,5 +1,5 @@
 import React, {FC, useContext, useEffect, useRef, useState} from 'react';
-import classes from './LoginForm.module.css';
+import classes from './LoginForm.module.scss';
 import CustomInput from "../input/CustomInput";
 import CustomButton, {ButtonClass} from "../button/CustomButton";
 import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
