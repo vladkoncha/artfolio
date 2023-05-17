@@ -2,6 +2,7 @@ import userService from '../services/user-service';
 import {validationResult} from 'express-validator';
 import {ApiError} from '../exceptions/api-error';
 import {NextFunction, Request, Response} from "express";
+import tokenService, {DecodedAccessToken} from "../services/token-service";
 
 class UserController {
     async registration(req: Request, res: Response, next: NextFunction) {
@@ -74,6 +75,23 @@ class UserController {
     async updateProfileInfo(req: Request, res: Response, next: NextFunction) {
         try {
             const {id, name, username, bio, links} = req.body;
+
+            const authorizationHeader = req.headers.authorization;
+            if (!authorizationHeader) {
+                return next(ApiError.UnauthorizedError());
+            }
+            const accessToken = authorizationHeader.split(' ')[1];
+
+            if (accessToken) {
+                const decodedAccessToken = tokenService.decodeAccessToken(accessToken as string) as DecodedAccessToken;
+                const userIdFromToken = decodedAccessToken.id;
+                if (userIdFromToken !== id) {
+                    return next(ApiError.UnauthorizedError());
+                }
+            } else {
+                return next(ApiError.UnauthorizedError());
+            }
+
             const userData = await userService.updateProfileInfo(id, name, username, bio, links);
             return res.json(userData);
         } catch (e) {

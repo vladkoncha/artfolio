@@ -1,6 +1,10 @@
 import jwt, {JwtPayload} from 'jsonwebtoken';
 import tokenModel from '../models/token-model';
 
+export interface DecodedAccessToken {
+    id: string;
+}
+
 class TokenService {
     generateTokens(payload: object) {
         const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET as jwt.Secret, {expiresIn: '30m'});
@@ -19,6 +23,14 @@ class TokenService {
     validateRefreshToken(token: string): JwtPayload | null {
         try {
             return jwt.verify(token, process.env.JWT_REFRESH_SECRET as jwt.Secret) as JwtPayload;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    decodeAccessToken(token: string): string | JwtPayload | null {
+        try {
+            return jwt.decode(token);
         } catch (e) {
             return null;
         }
