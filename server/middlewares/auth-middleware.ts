@@ -1,6 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-
-const ApiError = require('../exceptions/api-error');
+import {ApiError} from "../exceptions/api-error";
 import tokenService from "../services/token-service";
 import {JwtPayload} from "jsonwebtoken";
 
