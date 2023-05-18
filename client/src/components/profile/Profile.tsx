@@ -20,7 +20,8 @@ const Profile = () => {
                         <p><b>{store.user.name}</b></p>
                         <p><i>@{store.user.username}</i></p>
                     </div>
-                    <LinksList links={store.user.links}/>
+                    {store.user.links.length > 0
+                        && <LinksList links={store.user.links}/>}
                     <CustomButton
                         buttonClass={ButtonClass.SECONDARY}
                         onClick={() => navigate('/edit')}>

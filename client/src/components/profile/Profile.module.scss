@@ -5,21 +5,27 @@
   flex-direction: column;
   position: relative;
   background-color: #fff;
-  border-radius: 10px;
   height: 100vh;
 
   border: 0;
 }
 
 .profileInfo {
-  max-width: 800px;
+  max-width: 100vw;
   width: 100%;
+
+  p {
+    margin: auto 1rem;
+    max-width: 95%;
+    word-wrap: break-word;
+  }
 }
 
 .nameContainer {
   display: flex;
   flex-direction: column;
-  width: 32%;
+
+  width: 95%;
 
   p {
     margin: 0.25rem 0;
@@ -30,9 +36,9 @@
 
 .topContainer {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 2rem;
-  justify-content: space-between;
+  justify-content: space-around;
 
   button[class*="primary"] {
     max-width: 100%;
@@ -60,7 +66,13 @@
   top: -4rem;
 }
 
-@media screen and (min-width: 40em) {
+@media screen and (min-width: 50em) {
+  .profileInfo {
+    //max-width: 800px;
+
+    max-width: 50rem;
+  }
+
   .profileContainer {
     align-items: center;
 
@@ -69,5 +81,9 @@
       padding: 0;
       margin: 0;
     }
+  }
+
+  .nameContainer {
+    width: 32%;
   }
 }

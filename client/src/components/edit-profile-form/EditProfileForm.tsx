@@ -110,6 +110,7 @@ const EditProfileForm = () => {
                     <CustomTextArea
                         {...register('bio')}
                         control={control}
+                        defaultValue={store.user.bio}
                         placeholder='Enter a short Bio'
                         maxLength={300}
                         name='bio'
