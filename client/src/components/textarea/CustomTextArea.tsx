@@ -4,14 +4,15 @@ import {Control, useWatch} from "react-hook-form";
 
 interface TextAreaProps extends InputHTMLAttributes<HTMLTextAreaElement> {
     maxLength?: number;
+    defaultValue?: string;
     name: string;
     control: Control<any>;
 }
 
 const CustomTextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-    ({name, maxLength, control, ...rest},
+    ({name, defaultValue, maxLength, control, ...rest},
      ref: ForwardedRef<HTMLTextAreaElement>) => {
-        const areaValue = useWatch({control, name: name, defaultValue: ''});
+        const areaValue = useWatch({control, name: name, defaultValue: defaultValue || ''});
 
         return (
             <div className={classes.areaContainer}>

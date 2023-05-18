@@ -1,0 +1,54 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1vw;
+
+  button[class*="primary"] {
+    max-width: 95vw;
+    width: 30rem;
+  }
+}
+
+.loginForm > h1 {
+  font-size: 1.7rem;
+  margin: 40px 0;
+  font-weight: 600;
+}
+
+
+.loginForm input {
+  box-sizing: border-box;
+  max-width: 95vw;
+  width: 30rem;
+}
+
+@media screen and (min-width: 40rem) {
+  .loginForm input {
+    max-width: 60vw;
+  }
+
+  .loginForm > h1 {
+    margin: 40px 50px;
+  }
+}
+
+.loginForm a {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #2980ff;
+}
+
+.loginForm a:hover {
+  text-decoration: none;
+  color: #005eff;
+}
+
+.signUp {
+  margin-bottom: 40px;
+  font-size: 0.9em;
+}

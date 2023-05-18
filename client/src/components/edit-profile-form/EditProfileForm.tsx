@@ -10,6 +10,7 @@ import IconButton, {IconType} from "../button/icon-button/IconButton";
 import {schema} from "./formSchema";
 import {ERRORS} from "../../errors/errors";
 import {Context} from "../../index";
+import {useNavigate} from "react-router-dom";
 
 type LinkInput = {
     name: string;
@@ -25,6 +26,7 @@ type Inputs = {
 
 const EditProfileForm = () => {
     const {store} = useContext(Context);
+    const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState('');
     const [submitLoading, setSubmitLoading] = useState(false);
     const {
@@ -64,6 +66,7 @@ const EditProfileForm = () => {
             user.bio = data.bio || "";
             user.links = data.links.filter(link => link.name && link.url);
             await store.updateProfileInfo(user);
+            navigate('/profile');
         } catch (e: any) {
             setErrorMessage(ERRORS.unknown);
             console.log(e.response?.data);
@@ -107,6 +110,7 @@ const EditProfileForm = () => {
                     <CustomTextArea
                         {...register('bio')}
                         control={control}
+                        defaultValue={store.user.bio}
                         placeholder='Enter a short Bio'
                         maxLength={300}
                         name='bio'
