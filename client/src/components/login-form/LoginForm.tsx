@@ -6,7 +6,7 @@ import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import {useForm, SubmitHandler} from "react-hook-form";
-import {ERRORS, getLengthError} from "../../errors/errors";
+import {ERRORS, getFormatError, getLengthError} from "../../errors/errors";
 import ErrorMessage from "../error-message/ErrorMessage";
 import {object, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
@@ -14,17 +14,9 @@ import {yupResolver} from "@hookform/resolvers/yup";
 
 type Inputs = {
     email: string,
+    username: string,
     password: string,
 };
-
-const schema = object().shape({
-    email: string().required(ERRORS.fieldRequired).email(ERRORS.emailFormat),
-    password: string().required(ERRORS.fieldRequired)
-        .min(3, getLengthError('Password',
-            {minLength: 3, maxLength: 32}))
-        .max(32, getLengthError('Password',
-            {minLength: 3, maxLength: 32}))
-});
 
 const LoginForm: FC = () => {
     const {store} = useContext(Context);
@@ -32,6 +24,23 @@ const LoginForm: FC = () => {
     const [registration, setRegistration] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
     const emailRef = useRef<HTMLInputElement | null>(null);
+
+    const schema = object().shape({
+        email: string().required(ERRORS.fieldRequired).email(ERRORS.emailFormat),
+        username: registration
+            ? string().required(ERRORS.fieldRequired)
+                .max(32, getLengthError('Username', {maxLength: 32}))
+                .matches(/^[a-zA-Z0-9]+$/,
+                    getFormatError('Username', {alphabetical: true, numbers: true}))
+            : string().notRequired(),
+        password:
+            string().required(ERRORS.fieldRequired)
+                .min(3, getLengthError('Password',
+                    {minLength: 3, maxLength: 32}))
+                .max(32, getLengthError('Password',
+                    {minLength: 3, maxLength: 32}))
+    });
+
     const {
         register,
         setFocus,
@@ -43,13 +52,13 @@ const LoginForm: FC = () => {
         setFocus('email');
     }, []);
 
-    const onSubmit: SubmitHandler<Inputs> = async ({email, password}: Inputs) => {
+    const onSubmit: SubmitHandler<Inputs> = async ({email, username, password}: Inputs) => {
         setErrorMessage('');
         setLoginLoading(true);
 
         try {
             if (registration) {
-                await store.registration(email, password);
+                await store.registration(email, username, password);
             } else {
                 await store.login(email, password);
             }
@@ -86,6 +95,18 @@ const LoginForm: FC = () => {
                 placeholder='Email'
             />
             <ErrorMessage>{errors.email?.message}</ErrorMessage>
+
+            {registration &&
+                (<>
+                    <CustomInput
+                        {...register('username')}
+                        label='Username'
+                        name='username'
+                        placeholder='Username'
+                    />
+                    <ErrorMessage>{errors.username?.message}</ErrorMessage>
+                </>)
+            }
 
             <PasswordInputWithToggle
                 {...register('password')}
