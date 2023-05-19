@@ -17,7 +17,9 @@ const Profile = () => {
                 <div className={classes.topContainer}>
                     <div className={classes.profileImage}></div>
                     <div className={classes.nameContainer}>
-                        <p><b>{store.user.name}</b></p>
+                        {store.user.name !== ""
+                            ? <p><b>{store.user.name}</b></p>
+                            : <p><b>{store.user.username[0].toUpperCase() + store.user.username.slice(1)}</b></p>}
                         <p><i>@{store.user.username}</i></p>
                     </div>
                     {store.user.links.length > 0
