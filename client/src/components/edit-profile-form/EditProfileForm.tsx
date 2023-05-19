@@ -32,6 +32,7 @@ const EditProfileForm = () => {
     const {
         register,
         setFocus,
+        setError,
         handleSubmit,
         control,
         formState: {errors}
@@ -68,7 +69,16 @@ const EditProfileForm = () => {
             await store.updateProfileInfo(user);
             navigate('/profile');
         } catch (e: any) {
-            setErrorMessage(ERRORS.unknown);
+            if (e.response?.data?.status === 400) {
+                setErrorMessage(e.response?.data?.message);
+                setFocus('username');
+                setError("username", {
+                    type: "manual",
+                    message: e.response?.data?.message,
+                });
+            } else {
+                setErrorMessage(ERRORS.unknown);
+            }
             console.log(e.response?.data);
         } finally {
             setSubmitLoading(false);
@@ -170,7 +180,7 @@ const EditProfileForm = () => {
             >
                 Save Changes
             </CustomButton>
-            {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {errorMessage && <ErrorMessage style={{marginBottom: "1rem"}}>{errorMessage}</ErrorMessage>}
         </form>
     );
 };

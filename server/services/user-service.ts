@@ -84,6 +84,11 @@ class UserService {
         bio: string,
         links: { name: string, url: string }[],
     ) {
+        const userByUsername = await UserModel.findOne({username});
+        if (userByUsername && userByUsername._id.toString() !== id) {
+            throw ApiError.BadRequest('User with such username already exists');
+        }
+
         await UserModel.updateOne({_id: id}, {$set: {name, username, bio, links}});
 
         const user = await UserModel.findOne({_id: id});
