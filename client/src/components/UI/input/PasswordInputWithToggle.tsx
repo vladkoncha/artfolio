@@ -1,8 +1,8 @@
 import React, {forwardRef, Ref, useState, InputHTMLAttributes} from 'react';
 import classes from './CustomInput.module.scss';
 import passwordStyles from './PasswordInput.module.css';
-import showIcon from '../../media/icons/password-eye.svg';
-import hideIcon from '../../media/icons/password-eye-off.svg';
+import showIcon from '../../../media/icons/password-eye.svg';
+import hideIcon from '../../../media/icons/password-eye-off.svg';
 import CustomInput from "./CustomInput";
 
 const PasswordInputWithToggle = forwardRef(

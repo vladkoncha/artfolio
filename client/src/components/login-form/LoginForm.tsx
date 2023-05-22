@@ -1,15 +1,16 @@
 import React, {FC, useContext, useEffect, useRef, useState} from 'react';
 import classes from './LoginForm.module.scss';
-import CustomInput from "../input/CustomInput";
-import CustomButton, {ButtonClass} from "../button/CustomButton";
-import PasswordInputWithToggle from "../input/PasswordInputWithToggle";
+import CustomInput from "../UI/input/CustomInput";
+import CustomButton, {ButtonClass} from "../UI/button/CustomButton";
+import PasswordInputWithToggle from "../UI/input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import {useForm, SubmitHandler} from "react-hook-form";
 import {ERRORS, getFormatError, getLengthError} from "../../errors/errors";
-import ErrorMessage from "../error-message/ErrorMessage";
+import ErrorMessage from "../UI/error-message/ErrorMessage";
 import {object, string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {useNavigate} from "react-router-dom";
 
 
 type Inputs = {
@@ -20,6 +21,7 @@ type Inputs = {
 
 const LoginForm: FC = () => {
     const {store} = useContext(Context);
+    const navigate = useNavigate();
     const [loginLoading, setLoginLoading] = useState<boolean>(false);
     const [registration, setRegistration] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -62,6 +64,7 @@ const LoginForm: FC = () => {
             } else {
                 await store.login(email, password);
             }
+            navigate(`/${store.user.username}`);
         } catch (e: any) {
             if (e.response?.data?.status === 400) {
                 if (registration) {

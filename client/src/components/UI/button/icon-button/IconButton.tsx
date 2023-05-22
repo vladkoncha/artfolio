@@ -1,6 +1,6 @@
 import React, {ButtonHTMLAttributes} from 'react';
 import classes from './IconButton.module.scss';
-import removeIcon from '../../../media/icons/remove.svg';
+import removeIcon from '../../../../media/icons/remove.svg';
 
 export enum IconType {
     REMOVE,

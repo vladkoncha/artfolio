@@ -1,4 +1,4 @@
-@use '../../styles/base';
+@use '../../../styles/base';
 
 .inputContainer {
   display: inline-block;
@@ -51,11 +51,11 @@ label {
 }
 
 .login {
-  background-image: url("../../media/icons/login-mail.svg");
+  background-image: url("../../../media/icons/login-mail.svg");
   @include iconSpace;
 }
 
 .password {
-  background-image: url("../../media/icons/password-key.svg");
+  background-image: url("../../../media/icons/password-key.svg");
   @include iconSpace;
 }

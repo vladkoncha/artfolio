@@ -1,7 +1,6 @@
 import UserModel from '../models/user-model';
 import bcrypt from 'bcrypt';
 import {v4} from 'uuid';
-import mailService from './mail-service';
 import tokenService from './token-service';
 import UserDto from "../dtos/user-dto";
 import {ApiError} from '../exceptions/api-error';
@@ -84,12 +83,10 @@ class UserService {
 
     async getUserByUsername(username: string) {
         const user = await UserModel.findOne({username});
-        console.log(user);
         if (!user) {
             throw ApiError.NotFound('User not found');
         }
-        const userDto = new PublicUserDto(user);
-        return {user: userDto};
+        return new PublicUserDto(user);
     }
 
     async updateProfileInfo(

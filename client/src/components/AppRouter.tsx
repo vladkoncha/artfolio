@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Navigate, Route, Routes} from "react-router-dom";
-import Loader from "./loader/Loader";
+import Loader from "./UI/loader/Loader";
 import {Context} from "../index";
 import {privateRoutes, publicRoutes} from "../router/routes";
 import {observer} from "mobx-react-lite";
@@ -17,7 +17,7 @@ const AppRouter = () => {
             ? (<Routes>
                     {privateRoutes.map(route => (
                         <Route key={route.path} path={route.path} element={<route.component/>}></Route>))}
-                    <Route path="/*" element={<Navigate to="/profile" replace={true}/>}></Route>
+                    <Route path="/*" element={<Navigate to={`/${store.user.username}`}  replace={true}/>}></Route>
                 </Routes>
 
             )

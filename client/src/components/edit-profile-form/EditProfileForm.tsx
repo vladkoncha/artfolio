@@ -1,12 +1,12 @@
 import React, {Fragment, useContext, useEffect, useState} from 'react';
-import CustomButton, {ButtonClass} from "../button/CustomButton";
+import CustomButton, {ButtonClass} from "../UI/button/CustomButton";
 import classes from './EditProfileForm.module.scss';
-import CustomInput from "../input/CustomInput";
-import CustomTextArea from "../textarea/CustomTextArea";
+import CustomInput from "../UI/input/CustomInput";
+import CustomTextArea from "../UI/textarea/CustomTextArea";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
-import ErrorMessage from "../error-message/ErrorMessage";
+import ErrorMessage from "../UI/error-message/ErrorMessage";
 import {yupResolver} from "@hookform/resolvers/yup";
-import IconButton, {IconType} from "../button/icon-button/IconButton";
+import IconButton, {IconType} from "../UI/button/icon-button/IconButton";
 import {schema} from "./formSchema";
 import {ERRORS} from "../../errors/errors";
 import {Context} from "../../index";
@@ -67,7 +67,7 @@ const EditProfileForm = () => {
             user.bio = data.bio || "";
             user.links = data.links.filter(link => link.name && link.url);
             await store.updateProfileInfo(user);
-            navigate('/profile');
+            navigate(`/${store.user.username}`);
         } catch (e: any) {
             if (e.response?.data?.status === 400) {
                 setErrorMessage(e.response?.data?.message);

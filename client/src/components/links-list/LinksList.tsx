@@ -1,7 +1,7 @@
 import React, {MouseEvent, useEffect, useRef, useState} from 'react';
 import classes from './LinksList.module.scss';
 import {ILink} from "../../models/IUser";
-import CustomButton, {ButtonClass} from "../button/CustomButton";
+import CustomButton, {ButtonClass} from "../UI/button/CustomButton";
 import {CSSTransition} from 'react-transition-group';
 
 interface LinksListProps {

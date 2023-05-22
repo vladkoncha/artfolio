@@ -1,4 +1,4 @@
-import React, {Ref, ReactNode, CSSProperties} from 'react';
+import React, {ReactNode, CSSProperties} from 'react';
 import classes from './ErrorMessage.module.css';
 
 interface ParagraphProps {

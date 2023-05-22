@@ -2,7 +2,7 @@ import React, {useContext, useLayoutEffect} from 'react';
 import './styles/App.scss';
 import {Context} from "./index";
 import {observer} from "mobx-react-lite";
-import CustomButton, {ButtonClass} from "./components/button/CustomButton";
+import CustomButton, {ButtonClass} from "./components/UI/button/CustomButton";
 import AppRouter from "./components/AppRouter";
 import {BrowserRouter} from "react-router-dom";
 
