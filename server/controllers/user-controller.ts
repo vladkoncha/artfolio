@@ -63,6 +63,16 @@ class UserController {
         }
     }
 
+    async getUserByUsername(req: Request, res: Response, next: NextFunction) {
+        try {
+            const {username} = req.params;
+            const user = await userService.getUserByUsername(username);
+            return res.json(user);
+        } catch (e) {
+            next(e);
+        }
+    }
+
     async getUsers(req: Request, res: Response, next: NextFunction) {
         try {
             const users = await userService.getAllUsers();

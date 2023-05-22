@@ -17,5 +17,6 @@ router.post('/updateProfileInfo', authMiddleware, userController.updateProfileIn
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
+router.get('/:username', userController.getUserByUsername);
 
 export default router;

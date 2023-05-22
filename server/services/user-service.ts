@@ -5,9 +5,10 @@ import mailService from './mail-service';
 import tokenService from './token-service';
 import UserDto from "../dtos/user-dto";
 import {ApiError} from '../exceptions/api-error';
+import PublicUserDto from "../dtos/public-user-dto";
 
 class UserService {
-    async registration(email: string, username:string, password: string) {
+    async registration(email: string, username: string, password: string) {
         const candidateEmail = await UserModel.findOne({email});
         if (candidateEmail) {
             throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`);
@@ -79,6 +80,16 @@ class UserService {
 
     async getAllUsers() {
         return UserModel.find();
+    }
+
+    async getUserByUsername(username: string) {
+        const user = await UserModel.findOne({username});
+        console.log(user);
+        if (!user) {
+            throw ApiError.NotFound('User not found');
+        }
+        const userDto = new PublicUserDto(user);
+        return {user: userDto};
     }
 
     async updateProfileInfo(
