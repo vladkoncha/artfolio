@@ -11,6 +11,7 @@ import {schema} from "./formSchema";
 import {ERRORS} from "../../errors/errors";
 import {Context} from "../../index";
 import {useNavigate} from "react-router-dom";
+import {IUser} from "../../models/IUser";
 
 type LinkInput = {
     name: string;
@@ -61,7 +62,8 @@ const EditProfileForm = () => {
         setErrorMessage('');
         setSubmitLoading(true);
         try {
-            const user = store.user;
+            const user = {} as IUser;
+            user.id = store.user.id;
             user.name = data.name || "";
             user.username = data.username || "";
             user.bio = data.bio || "";
