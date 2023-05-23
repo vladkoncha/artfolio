@@ -1,0 +1,12 @@
+.postsGrid {
+  background-color: #e3e3e3;
+}
+
+@media screen and (min-width: 50em) {
+  .postsGrid {
+    max-width: 50rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+  }
+}
