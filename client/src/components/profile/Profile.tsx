@@ -8,6 +8,7 @@ import UserService from "../../services/UserService";
 import {IPublicUser} from "../../models/IPublicUser";
 import {useFetch} from "../../hooks/useFetch";
 import Loader from "../UI/loader/Loader";
+import PostsForm from "../posts-form/PostsForm";
 
 const Profile = () => {
     const {username} = useParams();
@@ -56,6 +57,8 @@ const Profile = () => {
 
                 <p>{user?.bio}</p>
             </section>
+
+            <PostsForm/>
         </div>
     );
 };

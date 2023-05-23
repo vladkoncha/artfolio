@@ -1,0 +1,15 @@
+.postContainer {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+
+  img {
+    border-radius: 10px;
+    max-width: 100%;
+  }
+}
+
+.postDescriptionContainer {
+  display: flex;
+  gap: 2rem;
+}
