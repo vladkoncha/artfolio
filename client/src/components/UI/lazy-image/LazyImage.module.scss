@@ -1,8 +1,15 @@
+@use '../../../styles/base';
+
 .lazyImageContainer {
   width: 100%;
   height: 100%;
 
-  background-color: #d7d7d7;
+  min-height: inherit;
+  min-width: inherit;
 
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
 }
