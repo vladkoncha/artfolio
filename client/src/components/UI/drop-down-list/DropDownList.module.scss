@@ -1,0 +1,62 @@
+@use '../../../styles/base';
+
+.listContainer {
+  position: relative;
+}
+
+.list {
+  position: absolute;
+  top: 70%;
+
+  min-height: 3rem;
+  max-height: 40vh;
+  height: min-content;
+  min-width: 20vw;
+
+  border-radius: base.$border-radius;
+  border: 0;
+  padding: 0.25rem;
+  background-color: #fff;
+  @include base.shadow;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  li {
+    transition: all 0.1s ease-in;
+    line-height: 2.5;
+    text-align: center;
+    width: 100%;
+
+    padding: 0 0.5rem;
+    overflow-x: clip;
+  }
+}
+
+.listEnter {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.listEnterActive {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 200ms ease-in-out;
+}
+
+.listExit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.listExitActive {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 200ms ease-in-out;
+}

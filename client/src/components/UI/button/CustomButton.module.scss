@@ -10,10 +10,7 @@ button {
   font-weight: bold;
   cursor: pointer;
   border-radius: 10px;
-  //max-width: 95vw;
-  //width: 30rem;
-  margin: 20px 0;
-  transition: 0.15s ease-in;
+  transition: 0.1s ease-in;
   align-self: center;
 }
 
@@ -44,21 +41,12 @@ button {
 .secondary {
   @include buttonSettings;
 
-  color: base.$secondary-color;
-  border: 1px solid base.$secondary-color;
+  color: #000;
+  border: 0;
   background-color: #fff;
 
   &:not(:disabled):hover {
-    color: #fff;
     background-color: base.$secondary-color;
-  }
-}
-
-@media screen and (min-width: 40rem) {
-  .primary,
-  .secondary {
-    max-width: 60vw;
-    margin: 20px 50px;
   }
 }
 

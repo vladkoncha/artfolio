@@ -57,12 +57,12 @@
   align-items: center;
   justify-content: space-between;
 
-  button[class*="primary"] {
+  &>button[class*="primary"] {
     max-width: 100%;
     width: 10rem;
   }
 
-  button[class*="secondary"] {
+  &>button[class*="secondary"] {
     margin: 0 2rem;
     justify-self: flex-end;
   }

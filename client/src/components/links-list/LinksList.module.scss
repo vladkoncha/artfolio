@@ -2,60 +2,8 @@
 
 .linksListContainer {
   position: relative;
-}
 
-.list {
-  position: absolute;
-  top: 70%;
-
-  min-height: 3rem;
-  max-height: 40vh;
-  height: min-content;
-  min-width: 20vw;
-
-  border-radius: 10px;
-  border: 1px solid base.$secondary-color;
-  padding: 0;
-  background-color: #fff;
-
-  overflow-y: scroll;
-  overflow-x: hidden;
-  list-style: none;
-
-  li {
-    cursor: pointer;
-    transition: all 0.1s ease-in;
-    line-height: 2.5;
-    text-align: center;
-
-    padding: 0 0.5rem;
-    overflow-x: clip;
-
-    &:hover {
-      background-color: base.$secondary-color;
-      color: #fff;
-    }
+  button {
+    width: 100%;
   }
-}
-
-.listEnter {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-.listEnterActive {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 200ms ease-in-out;
-}
-
-.listExit {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.listExitActive {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 200ms ease-in-out;
 }
