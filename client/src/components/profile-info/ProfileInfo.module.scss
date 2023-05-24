@@ -8,7 +8,8 @@
   background-color: #fff;
 
   border-radius: base.$border-radius;
-  box-shadow: 0 0 1px #404040;
+
+  @include base.shadow;
 
   border: 0;
 }

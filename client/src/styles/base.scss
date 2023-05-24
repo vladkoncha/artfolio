@@ -5,5 +5,5 @@ $back-color: #fafafa;
 $border-radius: 10px;
 
 @mixin shadow() {
-  box-shadow: 0 0 1px #404040;
+  box-shadow: 0 0 1px rgba(64, 64, 64, 0.5);
 }
