@@ -31,10 +31,14 @@
   width: 95%;
 
   p {
-    margin: 0 2rem;
+    margin: 0 1rem;
     line-height: 1.5;
     max-width: 100%;
     word-wrap: break-word;
+
+    b {
+      font-size: 1.2em;
+    }
   }
 }
 
@@ -42,7 +46,8 @@
   border-radius: base.$border-radius;
   background-color: base.$back-color;
   padding: 0.5rem;
-  margin: 1rem 1.5rem;
+  margin: 1rem 0.75rem;
+  min-height: 3rem;
 
   p {
     margin: 0;
@@ -53,20 +58,17 @@
 
 .topContainer {
   display: flex;
+  margin: auto 0.5rem;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 
-  &>button[class*="primary"] {
-    max-width: 100%;
-    width: 10rem;
-  }
-
-  &>button[class*="secondary"] {
-    margin: 0 2rem;
-    justify-self: flex-end;
+  &>*[class*="List"] {
+    flex-grow: 1;
   }
 }
+
+
 
 .bannerImage {
   border-radius: base.$border-radius base.$border-radius 0 0;
@@ -84,7 +86,6 @@
   min-height: 7rem;
   position: relative;
   top: -1.5rem;
-  margin: auto 2rem;
 
   max-width: 7rem;
   max-height: 7rem;
@@ -99,13 +100,31 @@
   }
 }
 
-@media screen and (min-width: 50em) {
+@media screen and (min-width: 40rem) {
+  .topContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: auto 2rem;
+
+    &>* {
+      margin-right: 2rem;
+    }
+
+    &>*[class*="List"] {
+      flex-grow: 1;
+    }
+  }
+
+
   .profileInfo {
     max-width: 50rem;
   }
 
   .profileContainer {
-    width: clamp(40vw, 50vw, 60vw);
     align-items: center;
 
     h2 {
@@ -117,5 +136,13 @@
 
   .nameContainer {
     width: 32%;
+
+    p {
+      margin: 0 2rem;
+    }
+  }
+
+  .bioContainer {
+    margin: 1rem 1.75rem;
   }
 }

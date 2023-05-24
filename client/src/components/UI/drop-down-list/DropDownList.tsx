@@ -1,6 +1,6 @@
 import React, {MouseEvent, ReactNode, useEffect, useRef, useState} from 'react';
 import classes from './DropDownList.module.scss';
-import CustomButton, {ButtonClass} from "../../UI/button/CustomButton";
+import classNames from "classnames";
 import {CSSTransition} from 'react-transition-group';
 
 interface LinksListProps {
@@ -9,7 +9,7 @@ interface LinksListProps {
 }
 
 
-const DropDownList = ({buttonCaption,listItems}: LinksListProps) => {
+const DropDownList = ({buttonCaption, listItems}: LinksListProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const listRef = useRef<HTMLUListElement>(null);
 
@@ -31,11 +31,18 @@ const DropDownList = ({buttonCaption,listItems}: LinksListProps) => {
         setIsOpen(!isOpen);
     };
 
+    const buttonClasses = [classes.listButton];
+    if (isOpen) {
+        buttonClasses.push(classes.listButtonOpen);
+    }
+
     return (
         <div className={classes.listContainer}>
-            <CustomButton onClick={toggleList} buttonClass={ButtonClass.PRIMARY}>
+            <button
+                onClick={toggleList}
+                className={classNames(buttonClasses)}>
                 {buttonCaption}
-            </CustomButton>
+            </button>
             <CSSTransition
                 in={isOpen}
                 timeout={200}

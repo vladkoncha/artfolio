@@ -2,9 +2,9 @@
 
 }
 
-@media screen and (min-width: 50em) {
+@media screen and (min-width: 50rem) {
   .profileContainer {
-    width: clamp(40vw, 50vw, 60vw);
+    width: clamp(50rem, 50rem, 60rem);
     align-items: center;
   }
 }
