@@ -1,9 +1,5 @@
-@use "../../styles/base";
-
 .postsGrid {
-  background-color: #fff;
-  border-radius: base.$border-radius;
-  @include base.shadow;
+  background-color: transparent;
 }
 
 @media screen and (min-width: 50rem) {
