@@ -14,7 +14,18 @@
   }
 }
 
+.postDate {
+  font-size: 85%;
+  align-self: flex-end;
+  margin: 0.5rem 1rem;
+}
+
 .postDescriptionContainer {
   display: flex;
   gap: 2rem;
+
+  p {
+    margin: 0.5rem 1rem;
+    font-weight: 500;
+  }
 }
