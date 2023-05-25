@@ -1,13 +1,13 @@
-import EditProfileForm from "../components/edit-profile-form/EditProfileForm";
-import LoginForm from "../components/login-form/LoginForm";
-import Profile from "../components/profile/Profile";
+import LoginPage from "../pages/LoginPage";
+import ProfilePage from "../pages/ProfilePage";
+import EditProfilePage from "../pages/EditProfilePage";
 
 export const privateRoutes = [
-    {path: '/edit', component: EditProfileForm},
-    {path: '/:username', component: Profile},
+    {path: '/edit', component: EditProfilePage},
+    {path: '/:username', component: ProfilePage},
 ];
 
 export const publicRoutes = [
-    {path: '/login', component: LoginForm},
-    {path: '/:username', component: Profile},
+    {path: '/login', component: LoginPage},
+    {path: '/:username', component: ProfilePage},
 ];

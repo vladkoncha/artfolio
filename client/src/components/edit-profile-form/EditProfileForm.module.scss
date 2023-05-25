@@ -10,7 +10,15 @@
   background-color: #fff;
   border-radius: 10px;
   max-width: 1000px;
-  border: 1px solid base.$primary-color;
+  margin: 1rem auto;
+  padding: 1rem 0;
+  @include base.shadow;
+
+  &>button {
+    margin-top: 2.5rem;
+    width: 50%;
+    height: 3rem;
+  }
 }
 
 .editProfileForm textarea {
@@ -41,6 +49,10 @@
   width: 95%;
 
   input, textarea {
+    width: 100%;
+  }
+
+  &>button {
     width: 100%;
   }
 }

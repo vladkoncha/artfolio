@@ -1,0 +1,55 @@
+@use '../../styles/base';
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  @include base.shadow;
+  border-radius: 0 0 base.$border-radius base.$border-radius;
+  background-color: #fff;
+
+  width: 100vw;
+  padding: 0.75rem 0;
+
+  & > *:first-child, & > *:last-child {
+    margin: auto 0.5rem;
+  }
+
+  & > *[class*='Input'] {
+    flex-grow: 0.7;
+  }
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 0.5rem;
+
+  &>button {
+    white-space: nowrap;
+  }
+}
+
+.homeLink {
+  font-weight: bold;
+  color: #000;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  text-decoration: none;
+
+  transition: all 0.15s ease-in;
+
+  &:hover {
+    color: #505050;
+  }
+}
+
+@media screen and (min-width: 40rem) {
+  .headerContainer {
+    & > *:first-child, & > *:last-child {
+      margin: auto 2rem;
+    }
+
+    & > *[class*='Input'] {
+      flex-grow: 0.8;
+    }
+  }
+}
