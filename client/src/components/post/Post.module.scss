@@ -1,7 +1,12 @@
+@use "../../styles/base";
+
 .postContainer {
-  border-radius: 10px;
+  border-radius: base.$border-radius;
   display: flex;
   flex-direction: column;
+  @include base.shadow;
+
+  margin-bottom: 0.5rem;
 
   img {
     border-radius: 10px;

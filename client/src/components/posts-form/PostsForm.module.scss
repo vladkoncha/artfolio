@@ -1,12 +1,16 @@
+@use "../../styles/base";
+
 .postsGrid {
-  background-color: #e3e3e3;
+  background-color: #fff;
+  border-radius: base.$border-radius;
+  @include base.shadow;
 }
 
-@media screen and (min-width: 50em) {
+@media screen and (min-width: 50rem) {
   .postsGrid {
-    max-width: 50rem;
+    max-width: 80rem;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     grid-gap: 1rem;
   }
 }

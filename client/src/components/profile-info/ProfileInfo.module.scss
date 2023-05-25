@@ -114,12 +114,13 @@
 
     &>*[class*="List"] {
       flex-grow: 1;
+      max-width: 40rem;
     }
   }
 
 
   .profileInfo {
-    max-width: 50rem;
+    max-width: 80rem;
   }
 
   .profileContainer {
