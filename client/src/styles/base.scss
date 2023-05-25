@@ -1,3 +1,9 @@
 $primary-color: #2542ce;
-$secondary-color: #3e63cc;
-$back-color: #bfcfe3;
+$secondary-color: #eaeaea;
+$back-color: #fafafa;
+
+$border-radius: 10px;
+
+@mixin shadow() {
+  box-shadow: 0 0 1px rgba(64, 64, 64, 0.5);
+}

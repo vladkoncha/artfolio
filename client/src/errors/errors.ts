@@ -3,7 +3,7 @@ export const ERRORS = {
     unknown: "Unknown error",
     emailFormat: "Enter a valid email address",
     fieldRequired: "This field is required",
-    maxLinks: "You can't add more than 10 links to your profile",
+    maxLinks: "You can't add more than 10 links to your profile-info",
     linkURLFormat: "Enter a valid URL",
 };
 

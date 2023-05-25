@@ -22,9 +22,9 @@ const Post = ({title, date, src}: PostProps) => {
         <div className={classes.postContainer}>
             <div className={classes.postDescriptionContainer}>
                 <p>{title}</p>
-                <p>{formattedDate}</p>
             </div>
             <LazyImage alt={title} src={src}/>
+            <p className={classes.postDate}>{formattedDate}</p>
         </div>
     );
 };

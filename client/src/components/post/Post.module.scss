@@ -1,7 +1,12 @@
+@use "../../styles/base";
+
 .postContainer {
-  border-radius: 10px;
+  border-radius: base.$border-radius;
   display: flex;
   flex-direction: column;
+  @include base.shadow;
+
+  margin-bottom: 0.5rem;
 
   img {
     border-radius: 10px;
@@ -9,7 +14,18 @@
   }
 }
 
+.postDate {
+  font-size: 85%;
+  align-self: flex-end;
+  margin: 0.5rem 1rem;
+}
+
 .postDescriptionContainer {
   display: flex;
   gap: 2rem;
+
+  p {
+    margin: 0.5rem 1rem;
+    font-weight: 500;
+  }
 }

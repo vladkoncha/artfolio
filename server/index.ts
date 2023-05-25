@@ -6,7 +6,8 @@ import mongoose from 'mongoose';
 import router from './router/router';
 import errorMiddleware from './middlewares/error-middleware';
 
-const PORT = process.env.PORT || 4000;
+const PORT = Number(process.env.PORT) || 4000;
+const HOSTNAME = process.env.HOSTNAME || 'localhost';
 const app = express();
 
 app.use(express.json());
@@ -21,7 +22,7 @@ app.use(errorMiddleware);
 const start = async (): Promise<void> => {
     try {
         await mongoose.connect(process.env.DB_URL as string);
-        app.listen(PORT, () => console.log(`Server started on PORT = ${PORT}`));
+        app.listen(PORT, HOSTNAME, () => console.log(`Server started on ${HOSTNAME}:${PORT}`));
     } catch (e) {
         console.log(e);
     }
