@@ -1,9 +1,11 @@
 import React, {ButtonHTMLAttributes} from 'react';
 import classes from './IconButton.module.scss';
 import removeIcon from '../../../../media/icons/remove.svg';
+import crossIcon from '../../../../media/icons/cross.svg';
 
 export enum IconType {
     REMOVE,
+    CLOSE
 }
 
 type iconSrcMap = { [key in IconType]: { alt: string; svg: string } };
@@ -11,6 +13,10 @@ const iconSrcMap: iconSrcMap = {
     [IconType.REMOVE]: {
         alt: 'Remove',
         svg: removeIcon,
+    },
+    [IconType.CLOSE]: {
+        alt: 'Close',
+        svg: crossIcon,
     },
 };
 

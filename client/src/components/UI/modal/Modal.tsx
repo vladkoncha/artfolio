@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 import classes from './Modal.module.scss';
+import IconButton, {IconType} from "../button/icon-button/IconButton";
 
 interface ModalProps {
     children: ReactNode;
@@ -18,6 +19,7 @@ const Modal = ({children, visible, setVisible}: ModalProps) => {
             className={rootClasses.join(' ')}
             onClick={() => setVisible(false)}
         >
+            <IconButton onClick={() => setVisible(false)} iconType={IconType.CLOSE}/>
             <div
                 className={classes.modalContent}
                 onClick={(e) => e.stopPropagation()}

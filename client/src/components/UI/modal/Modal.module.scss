@@ -1,23 +1,30 @@
 @use '../../../styles/base';
 
 .modal {
-    position: fixed;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  background: rgba(0, 0, 0, 0.35);
+  @include base.shadow;
+
+  & > button {
+    position: absolute;
     top: 0;
-    bottom: 0;
-    right: 0;
     left: 0;
-    display: none;
-    background: rgba(0, 0, 0, 0.35);
+  }
 }
 
 .modalContent {
-    background-color: #fff;
-    border-radius: base.$border-radius;
+  background-color: #fff;
+  border-radius: base.$border-radius;
 }
 
 
 .modal.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
