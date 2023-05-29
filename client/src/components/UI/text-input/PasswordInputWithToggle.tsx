@@ -1,9 +1,9 @@
 import React, {forwardRef, Ref, useState, InputHTMLAttributes} from 'react';
-import classes from './CustomInput.module.scss';
+import classes from './CustomTextInput.module.scss';
 import passwordStyles from './PasswordInput.module.css';
 import showIcon from '../../../media/icons/password-eye.svg';
 import hideIcon from '../../../media/icons/password-eye-off.svg';
-import CustomInput from "./CustomInput";
+import CustomTextInput from "./CustomTextInput";
 
 const PasswordInputWithToggle = forwardRef(
     (props: InputHTMLAttributes<HTMLInputElement>, ref: Ref<HTMLInputElement>) => {
@@ -15,7 +15,7 @@ const PasswordInputWithToggle = forwardRef(
 
         return (
             <div className={passwordStyles.passwordInputContainer}>
-                <CustomInput
+                <CustomTextInput
                     className={[classes.customInput, classes.password].join(' ')}
                     type={showPassword ? 'text' : 'password'}
                     label='Password'

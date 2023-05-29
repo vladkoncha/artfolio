@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import classes from './Header.module.scss';
-import CustomInput from "../UI/input/CustomInput";
+import CustomTextInput from "../UI/text-input/CustomTextInput";
 import CustomButton, {ButtonClass} from "../UI/button/CustomButton";
 import {Context} from "../../index";
 import {observer} from "mobx-react-lite";
@@ -13,7 +13,7 @@ const Header = () => {
     return (
         <div className={classes.headerContainer}>
             <a href="/" className={classes.homeLink}>Artfolio</a>
-            <CustomInput name="search" type="text" placeholder="Search"/>
+            <CustomTextInput name="search" type="text" placeholder="Search"/>
             <div className={classes.buttonsContainer}>
                 {store.isAuth
                     ? (<><CustomButton

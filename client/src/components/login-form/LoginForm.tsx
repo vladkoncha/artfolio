@@ -1,8 +1,8 @@
 import React, {FC, useContext, useEffect, useRef, useState} from 'react';
 import classes from './LoginForm.module.scss';
-import CustomInput from "../UI/input/CustomInput";
+import CustomTextInput from "../UI/text-input/CustomTextInput";
 import CustomButton, {ButtonClass} from "../UI/button/CustomButton";
-import PasswordInputWithToggle from "../UI/input/PasswordInputWithToggle";
+import PasswordInputWithToggle from "../UI/text-input/PasswordInputWithToggle";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 import {useForm, SubmitHandler} from "react-hook-form";
@@ -90,7 +90,7 @@ const LoginForm: FC = () => {
                 ? <h1>Welcome to Artfolio!</h1>
                 : <h1>Log in to your Artfolio</h1>}
 
-            <CustomInput
+            <CustomTextInput
                 {...register('email')}
                 label='Email'
                 name='email'
@@ -101,7 +101,7 @@ const LoginForm: FC = () => {
 
             {registration &&
                 (<>
-                    <CustomInput
+                    <CustomTextInput
                         {...register('username')}
                         label='Username'
                         name='username'

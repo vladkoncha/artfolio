@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {mixed, object, string} from "yup";
 import {getLengthError} from "../../errors/errors";
-import CustomInput from "../UI/input/CustomInput";
+import CustomTextInput from "../UI/text-input/CustomTextInput";
 import CustomTextArea from "../UI/textarea/CustomTextArea";
 import CustomButton, {ButtonClass} from "../UI/button/CustomButton";
 import classes from './PostForm.module.scss';
@@ -51,7 +51,7 @@ const PostForm = () => {
             <input type="file"
                    id="image" name="image"
                    accept="image/*"/>
-            <CustomInput
+            <CustomTextInput
                 {...register('title')}
                 type="text"
                 label="Title"

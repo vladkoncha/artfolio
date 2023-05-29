@@ -1,7 +1,7 @@
 import React, {Fragment, useContext, useEffect, useState} from 'react';
 import CustomButton, {ButtonClass} from "../UI/button/CustomButton";
 import classes from './EditProfileForm.module.scss';
-import CustomInput from "../UI/input/CustomInput";
+import CustomTextInput from "../UI/text-input/CustomTextInput";
 import CustomTextArea from "../UI/textarea/CustomTextArea";
 import {SubmitHandler, useFieldArray, useForm} from "react-hook-form";
 import ErrorMessage from "../UI/error-message/ErrorMessage";
@@ -95,7 +95,7 @@ const EditProfileForm = () => {
                 <h2>Enter your details</h2>
 
                 <div className={classes.inputContainer}>
-                    <CustomInput
+                    <CustomTextInput
                         {...register('name')}
                         label='Name'
                         type='text'
@@ -103,7 +103,7 @@ const EditProfileForm = () => {
                     />
                     <ErrorMessage>{errors.name?.message}</ErrorMessage>
 
-                    <CustomInput
+                    <CustomTextInput
                         {...register('username')}
                         label='Username (*)'
                         type='text'
@@ -138,13 +138,13 @@ const EditProfileForm = () => {
                         return (
                             <Fragment key={field.id}>
                                 <div className={classes.inputContainerRow}>
-                                    <CustomInput
+                                    <CustomTextInput
                                         label='Link Name'
                                         type='text'
                                         placeholder='Link Name'
                                         {...register(`links.${index}.name`)}
                                     />
-                                    <CustomInput
+                                    <CustomTextInput
                                         label='Link URL'
                                         type='text'
                                         placeholder='URL'

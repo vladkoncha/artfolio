@@ -1,5 +1,5 @@
 import React, {forwardRef, Ref, InputHTMLAttributes, useRef} from 'react';
-import classes from './CustomInput.module.scss';
+import classes from './CustomTextInput.module.scss';
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
     label?: string;
@@ -7,7 +7,7 @@ interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
     type?: HTMLInputElement['type'];
 }
 
-const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
+const CustomTextInput = forwardRef<HTMLInputElement, CustomInputProps>(
     (props: CustomInputProps, ref: Ref<HTMLInputElement>) => {
         const containerRef = useRef<HTMLDivElement>(null);
 
@@ -38,4 +38,4 @@ const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     }
 );
 
-export default CustomInput;
+export default CustomTextInput;
