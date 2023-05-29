@@ -17,6 +17,7 @@
 
   & > *[class*='Input'] {
     flex-grow: 0.7;
+    max-width: 40rem;
   }
 }
 

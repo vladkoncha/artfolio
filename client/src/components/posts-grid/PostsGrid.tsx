@@ -3,9 +3,9 @@ import Post from "../post/Post";
 import {useFetch} from "../../hooks/useFetch";
 import PostService from "../../services/PostService";
 import Loader from "../UI/loader/Loader";
-import classes from "./PostsForm.module.scss";
+import classes from "./PostsGrid.module.scss";
 
-const PostsForm = () => {
+const PostsGrid = () => {
     const [posts, setPosts] = useState<any[]>([]);
     const [fetchPosts, isLoading, postsError] = useFetch(async () => {
         const newPosts = await PostService.getAll();
@@ -34,4 +34,4 @@ const PostsForm = () => {
     );
 };
 
-export default PostsForm;
+export default PostsGrid;

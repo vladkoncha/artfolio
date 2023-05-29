@@ -125,7 +125,6 @@ const EditProfileForm = () => {
                         defaultValue={store.user.bio}
                         placeholder='Enter a short Bio'
                         maxLength={300}
-                        name='bio'
                     />
                     <ErrorMessage>{errors.bio?.message}</ErrorMessage>
                 </div>

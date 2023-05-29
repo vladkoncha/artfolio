@@ -19,6 +19,7 @@ const PasswordInputWithToggle = forwardRef(
                     className={[classes.customInput, classes.password].join(' ')}
                     type={showPassword ? 'text' : 'password'}
                     label='Password'
+                    name="password"
                     ref={ref}
                     {...props}
                 />

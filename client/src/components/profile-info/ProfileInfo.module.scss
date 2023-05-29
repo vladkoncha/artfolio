@@ -63,13 +63,19 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 0.5rem;
+  flex-direction: column;
 
   &>*[class*="List"] {
     flex-grow: 1;
+    width: 100%;
   }
 }
 
-
+.ownProfileButtonsContainer {
+  display: flex;
+  gap: 0.5rem;
+}
 
 .bannerImage {
   border-radius: base.$border-radius base.$border-radius 0 0;
@@ -101,7 +107,7 @@
   }
 }
 
-@media screen and (min-width: 40rem) {
+@media screen and (min-width: 50rem) {
   .topContainer {
     display: flex;
     flex-direction: row;
@@ -115,6 +121,7 @@
     &>*[class*="List"] {
       flex-grow: 1;
       max-width: 40rem;
+      width: auto;
     }
   }
 

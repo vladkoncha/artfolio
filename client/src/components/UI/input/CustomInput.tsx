@@ -2,12 +2,12 @@ import React, {forwardRef, Ref, InputHTMLAttributes, useRef} from 'react';
 import classes from './CustomInput.module.scss';
 
 interface CustomInputProps extends InputHTMLAttributes<HTMLInputElement> {
-    label: string;
+    label?: string;
     name: string;
     type?: HTMLInputElement['type'];
 }
 
-const CustomInput = forwardRef<HTMLInputElement, any>(
+const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(
     (props: CustomInputProps, ref: Ref<HTMLInputElement>) => {
         const containerRef = useRef<HTMLDivElement>(null);
 

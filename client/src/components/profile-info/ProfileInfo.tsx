@@ -9,16 +9,20 @@ import {IPublicUser} from "../../models/IPublicUser";
 import {useFetch} from "../../hooks/useFetch";
 import Loader from "../UI/loader/Loader";
 import LazyImage from "../UI/lazy-image/LazyImage";
+import Modal from "../UI/modal/Modal";
+import PostForm from "../post-form/PostForm";
 
 const ProfileInfo = () => {
     const {username} = useParams();
     const {store} = useContext(Context);
     const navigate = useNavigate();
+    const [newPostModal, setNewPostModal] = useState(false);
     const [user, setUser] = useState<IPublicUser | null>(null);
     const [fetchUserByUsername, isLoading, error] = useFetch(async (username: string) => {
         const response = await UserService.getUserByUsername(username);
         setUser(response.data);
     }, true);
+    const ownPage = store.user.username === user?.username;
 
     useEffect(() => {
         void fetchUserByUsername(username);
@@ -42,13 +46,27 @@ const ProfileInfo = () => {
                     {user && user.links.length > 0
                         && <LinksList links={user.links}/>}
 
-                    {store.user.username === user?.username
+                    {ownPage
                         &&
-                        <CustomButton
-                            buttonClass={ButtonClass.SECONDARY}
-                            onClick={() => navigate('/edit')}>
-                            Edit
-                        </CustomButton>}
+                        <div className={classes.ownProfileButtonsContainer}>
+                            <CustomButton
+                                buttonClass={ButtonClass.PRIMARY}
+                                onClick={() => setNewPostModal(true)}>
+                                Create
+                            </CustomButton>
+                            <CustomButton
+                                buttonClass={ButtonClass.SECONDARY}
+                                onClick={() => navigate('/edit')}>
+                                Edit
+                            </CustomButton>
+                        </div>
+                    }
+
+                    {newPostModal &&
+                        <Modal visible={newPostModal} setVisible={setNewPostModal}>
+                            <PostForm/>
+                        </Modal>
+                    }
                 </div>
 
                 <div className={classes.nameContainer}>
@@ -61,7 +79,6 @@ const ProfileInfo = () => {
                 <div className={classes.bioContainer}>
                     <p>{user?.bio}</p>
                 </div>
-
             </section>
         </div>
     );
