@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import React, {ChangeEvent, useContext, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {mixed, object, string} from "yup";
@@ -10,15 +10,23 @@ import classes from './PostForm.module.scss';
 import ImageInput from "../UI/image-input/ImageInput";
 import ErrorMessage from "../UI/error-message/ErrorMessage";
 import ImagePreview from "../UI/image-preview/ImagePreview";
+import {Context} from "../../index";
+import {IPost} from "../../models/IPost";
+import {observer} from "mobx-react-lite";
+import {v4} from 'uuid';
 
 type Inputs = {
-    image: File | "",
+    images: FileList | "",
     title?: string,
     description?: string,
 };
 
+interface PostFormProps {
+    closeForm: () => void;
+}
+
 const schema = object().shape({
-    image: mixed().test('file', ERRORS.fieldRequired, (value) => {
+    images: mixed().test('file', ERRORS.fieldRequired, (value) => {
         if (value instanceof FileList) {
             return value.length > 0;
         }
@@ -37,8 +45,10 @@ const schema = object().shape({
 });
 
 
-const PostForm = () => {
+const PostForm = ({closeForm}: PostFormProps) => {
+    const {store} = useContext(Context);
     const [image, setImage] = useState<File | null>(null);
+    const [submitLoading, setSubmitLoading] = useState(false);
     const {
         register,
         setError,
@@ -51,7 +61,7 @@ const PostForm = () => {
     });
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setError("image", {});
+        setError("images", {});
         const files = event.target.files;
         if (files === null) {
             return;
@@ -59,14 +69,14 @@ const PostForm = () => {
         const selectedFile = files[0];
 
         if (selectedFile.size > 50 * 1e6) {
-            setError("image", {
+            setError("images", {
                 type: "manual",
                 message: "Max file size is 50MB",
             });
             return;
         }
         if (!selectedFile.type.startsWith('image/')) {
-            setError("image", {
+            setError("images", {
                 type: "manual",
                 message: "Invalid file type",
             });
@@ -75,9 +85,21 @@ const PostForm = () => {
         setImage(selectedFile);
     };
 
-    function onSubmit(data: Inputs) {
-        console.log('submit')
-        console.log(data);
+    async function onSubmit(data: Inputs) {
+        setSubmitLoading(true);
+
+        const post: IPost = {
+            id: v4(),
+            username: store.user.username,
+            image: (data.images as FileList).item(0) as File,
+            title: data.title || "[No Title]",
+            description: data.description || "[No Description]",
+            date: new Date(),
+        };
+        store.addPost(post);
+
+        setSubmitLoading(false);
+        closeForm();
     }
 
     return (
@@ -89,17 +111,17 @@ const PostForm = () => {
                         imageUrl={URL.createObjectURL(image)}
                         onClose={() => {
                             setImage(null);
-                            setValue('image', "");
+                            setValue('images', "");
                         }}
                     />}
                 <ImageInput
-                    {...register('image')}
+                    {...register('images')}
                     hidden={image !== null}
                     multiple={false}
                     onChange={handleFileChange}
                 />
             </div>
-            <ErrorMessage>{errors.image?.message}</ErrorMessage>
+            <ErrorMessage>{errors.images?.message}</ErrorMessage>
             <CustomTextInput
                 {...register('title')}
                 type="text"
@@ -116,9 +138,14 @@ const PostForm = () => {
                 maxLength={300}
             />
             <ErrorMessage>{errors.description?.message}</ErrorMessage>
-            <CustomButton type='submit' buttonClass={ButtonClass.PRIMARY}>Upload</CustomButton>
+            <CustomButton
+                type='submit'
+                disabled={submitLoading}
+                buttonClass={ButtonClass.PRIMARY}>
+                Upload
+            </CustomButton>
         </form>
     );
 };
 
-export default PostForm;
+export default observer(PostForm);

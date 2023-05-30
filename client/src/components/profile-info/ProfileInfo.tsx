@@ -10,7 +10,6 @@ import {useFetch} from "../../hooks/useFetch";
 import Loader from "../UI/loader/Loader";
 import LazyImage from "../UI/lazy-image/LazyImage";
 import PostForm from "../post-form/PostForm";
-import IconButton, {IconType} from "../UI/button/icon-button/IconButton";
 import Modal from "../UI/modal/Modal";
 
 const ProfileInfo = () => {
@@ -65,7 +64,7 @@ const ProfileInfo = () => {
 
                     {newPostModal &&
                         <Modal visible={newPostModal} setVisible={setNewPostModal}>
-                            <PostForm/>
+                            <PostForm closeForm={() => setNewPostModal(false)}/>
                         </Modal>
                     }
                 </div>

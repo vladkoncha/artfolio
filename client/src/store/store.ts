@@ -5,11 +5,15 @@ import axios from "axios";
 import {AuthResponse} from "../models/response/AuthResponse";
 import {API_URL} from "../http";
 import UserService from "../services/UserService";
+import {IPost} from "../models/IPost";
 
 export default class Store {
     user = {} as IUser;
     isAuth = false;
     isLoading = true;
+
+    // Store new posts locally for tests
+    posts = [] as IPost[];
 
     constructor() {
         makeAutoObservable(this);
@@ -25,6 +29,16 @@ export default class Store {
 
     setLoading(bool: boolean) {
         this.isLoading = bool;
+    }
+
+    addPost(post: IPost) {
+        this.posts.push(post);
+    }
+
+    getUserPosts(username: string) {
+        let userPosts = this.posts.filter(post => post.username === username);
+        userPosts.reverse();
+        return userPosts;
     }
 
     async login(email: string, password: string) {
